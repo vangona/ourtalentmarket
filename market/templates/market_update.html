@@ -1,0 +1,52 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2>정보 수정 하기</h2>
+    <hr>
+    <form method="POST" action="." enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="market_for_update" style="float: left;">수정할 장/모임 선택</label>
+      <select name="market_for_update" id="market_for_update">
+        {% for market in markets %}
+        <option value="{{ market.market_name }}">{{ market.market_name }}</option>
+        {% endfor %}
+      </select><br>
+      {% for field in form %}
+      {% if field.name == "content" %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
+        <textarea class="form-control" id="{{ field.id_for_label }}"
+          placeholder="{{ field.label }}" name="{{ field.name }}"></textarea>
+      </div>
+      {% else %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
+        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+          placeholder="{{ field.label }}" name="{{ field.name }}">
+      </div>
+      {% endif %}
+      {% endfor %}
+      <ul class="actions">
+        <li><input type="submit" value="수정" /></li>
+      </ul>
+    </form>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}

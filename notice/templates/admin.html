@@ -1,0 +1,105 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>공지사항</h1>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<header class="major">
+    {% if userinfo.level == 'admin' %}
+    <h1>관리자 페이지</h1>
+    <hr>
+    <article class="post featured">
+        <header class="major">
+            <h3>
+                <a>공지하기
+                </a>
+            </h3>
+            <div>
+                <button onclick="location.href='/notice/admin/register/'">공지하기</button>
+            </div>
+        </header>
+    </article>
+    <hr>
+    <article class="post featured">
+        <header class="major">
+            <h3>
+                <a>메인 공지 등록하기
+                </a>
+            </h3>
+            <div>
+                <button onclick="location.href='/notice/admin/noticemain/'">등록하기</button>
+            </div>
+        </header>
+    </article>
+    <hr>
+    <article class="post featured">
+        <header class="major">
+            <h3>
+                <a>장/모임 승인하기
+                </a>
+            </h3>
+            <div>
+                <button onclick="location.href='/notice/admin/authorize/'">승인하기</button>
+            </div>
+        </header>
+    </article>
+    <hr>
+    <article class="post featured">
+        <header class="major">
+            <h3>
+                <a>질문 답변하기
+                </a>
+            </h3>
+            <div>
+                <button onclick="location.href='/ask/answer/answer/'">답변하기</button>
+            </div>
+        </header>
+    </article>
+    <hr>
+    <article class="post featured">
+        <header class="major">
+            <h3>
+                <a>재능장 메인 등록하기
+                </a>
+            </h3>
+            <div>
+                <button onclick="location.href='/notice/admin/talentmarketmain/'">등록하기</button>
+            </div>
+        </header>
+    </article>
+    <hr>
+    <article class="post featured">
+        <header class="major">
+            <h3>
+                <a>공예품장 메인 등록하기
+                </a>
+            </h3>
+            <div>
+                <button onclick="location.href='/notice/admin/handcraftmain/'">등록하기</button>
+            </div>
+        </header>
+    </article>
+    <hr>
+    <article class="post featured">
+        <header class="major">
+            <h3>
+                <a>소모임 메인 등록하기
+                </a>
+            </h3>
+            <div>
+                <button onclick="location.href='/notice/admin/groupmain/'">등록하기</button>
+            </div>
+        </header>
+    </article>
+    <hr>
+    {% endif %}
+    {% endblock %}
+
+    <!-- article -->
+    {% block article %}
+    {% endblock %}

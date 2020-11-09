@@ -1,0 +1,48 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>질문 답변</h1>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<header class="major">
+  <article class="post featured">
+    <h2>질문 답변</h2>
+    <form action="." method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        {% if questions == None %}
+        <p>
+          답변 할 질문이 없습니다.
+        </p>
+        {% endif %}
+        <label for="question" style="float: left;">질문 선택</label>
+        <select name="question" id="id_question">
+          {% for question in questions %}
+          {% if question.answered == "N" %}
+          <option value="{{ question.title }}">{{ question.title }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+        <br />
+        <label for="id_title" style="float: left;">답변 제목</label>
+        <input type="text" class="form-control" id="id_title" name="title" placeholder="답변 제목"><br>
+        <label for="id_content">답변 내용</label>
+        <textarea class="form-control" id="id_content" name="content" placeholder="답변 내용"></textarea><br>
+      </div>
+      {% if field.errors %}
+      <span style="color: red">{{ field.errors }}</span>
+      {% endif %}
+      <input type="submit" value="제출">
+    </form>
+  </article>
+  <div class="button" style="float: right;"><a href="/ask/answer/answer/" class="none">돌아가기</a></div>
+  {% endblock %}
+
+  <!-- article -->
+  {% block article %}
+  {% endblock %}

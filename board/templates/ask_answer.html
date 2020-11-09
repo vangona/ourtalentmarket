@@ -1,0 +1,129 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                [{{ message.tags }}]
+                [{{ message.message }}]
+                </div>
+        {% endfor %}
+        </div><br>
+    {% endif %}
+  <header class="major">
+    <h2>
+      <a>질문하기
+      </a>
+    </h2>
+    <div class="instruction" style="padding: 3rem;">
+      <div class="row mt-5">
+        <div class="col-12">
+          <form method="POST" action=".">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+              <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
+              {% ifequal field.name 'content' %}
+              <textarea class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}"
+                style="height: 10rem;"></textarea>
+              {% else %}
+              <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                placeholder="{{ field.label }}" name="{{ field.name }}">
+              {% endifequal %}
+            </div><br />
+            {% if field.errors %}
+            <span style="color: red">{{ field.errors }}</span>
+            {% endif %}
+            {% endfor %}
+            <ul class="actions" style="float: right;">
+              <li><input type="submit" value="질문하기" class="left" /></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-12">
+          {{ error }}
+        </div>
+      </div>
+    </div>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+<!--답변 완료 -->
+<article class="post featured">
+  <header class="major">
+    <h2><a> 질문 답변 </a></h2><br>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>답변</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일자</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for question in questions %}
+          {% if question.answered == "Y" %}
+          <tr>
+            <th><a href="/ask/answer/{{ question.id }}">답변 보기</a></th>
+            <th>{{ question.title }}</th>
+            <th>{{ question.usernickname }}</th>
+            <th>{{ question.registered_dttm|date:'Y-m-d' }}</th>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </header>
+
+<hr>
+
+<!--답변 대기중 -->
+<article class="post featured">
+  <header class="major">
+    <h2><a> 답변대기중인 질문 </a></h2><br>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일자</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for question in questions %}
+          {% if question.answered == "N" %}
+          <tr>
+            <th>{{ question.title }}</th>
+            <th>{{ question.usernickname }}</th>
+            <th>{{ question.registered_dttm|date:'Y-m-d' }}</th>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </header>
+</article>
+{% endblock %}

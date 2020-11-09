@@ -1,0 +1,175 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2>{{ userinfo.usernickname }}님의 마이 페이지</h2>
+    <hr>
+    <h3>내 정보 수정하기</h3>
+    <a href="/mypage/update/" class="none">
+      <div class="button">수정하기</div>
+    </a>
+    <hr>
+    <h3>쪽지함</h3>
+    {% if counts != "0" %}
+    <div style="text-align: center;">
+      {{ counts }}개의 쪽지가 있습니다.
+    </div><br>
+    <a href="/mypage/note/read/" class="none">
+      <div class="button">쪽지 읽기({{ counts }})</div>
+    </a>
+    <hr>
+    {% else %}
+    <p>
+      표시할 내용이 없습니다.
+    </p>
+    <hr>
+    {% endif %}
+
+    <!-- 승인 대기중 -->
+
+    <h3>승인 대기중인 장/모임</h3>
+    {% if market_a %}
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>장/모임 이름</th>
+            <th>분류</th>
+            <th>등록일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for market in market_a %}
+          <tr>
+            <th>{{ market.market_name }}</th>
+            <th>{{ market.index_name }}</th>
+            <th>{{ market.registered_dttm|date:'Y-m-d' }}</th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    {% else %}
+    <p>
+      표시할 내용이 없습니다.
+    </p>
+    <hr>
+    {% endif %}
+
+    <!-- 재능장 -->
+
+    {% if talentmarkets %}
+    <h3>진행중인 재능장</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>장/모임 이름</th>
+            <th>분류</th>
+            <th>등록일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for market in talentmarkets %}
+          <tr>
+            <th><a href="/board/market/{{ market.id }}">{{ market.market_name }}</a></th>
+            <th><a href="/board/market/{{ market.id }}">{{ market.index_name }}</a></th>
+            <th><a href="/board/market/{{ market.id }}">{{ market.registered_dttm|date:'Y-m-d' }}</a></th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    {% else %}
+    <p>
+      표시할 내용이 없습니다.
+    </p>
+    <hr>
+    {% endif %}
+
+    <!-- 소모임 -->
+
+    {% if groups %}
+    <h3>진행중인 소모임</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>장/모임 이름</th>
+            <th>분류</th>
+            <th>등록일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for market in groups %}
+          <tr>
+            <th><a href="/board/group/{{ market.id }}">{{ market.market_name }}</a></th>
+            <th><a href="/board/group/{{ market.id }}">{{ market.index_name }}</a></th>
+            <th><a href="/board/group/{{ market.id }}">{{ market.registered_dttm|date:'Y-m-d' }}</a></th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    {% else %}
+    <p>
+      표시할 내용이 없습니다.
+    </p>
+    <hr>
+    {% endif %}
+
+    <!-- 공예품장 -->
+
+    {% if handcrafts %}
+    <h3>진행중인 공예품장</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>장/모임 이름</th>
+            <th>분류</th>
+            <th>등록일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for market in handcrafts %}
+          <tr>
+            <th><a href="/board/handcraft/{{ market.id }}">{{ market.market_name }}</a></th>
+            <th><a href="/board/handcraft/{{ market.id }}">{{ market.index_name }}</a></th>
+            <th><a href="/board/handcraft/{{ market.id }}">{{ market.registered_dttm|date:'Y-m-d' }}</a></th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    {% else %}
+    <p>
+      표시할 내용이 없습니다.
+    </p>
+    <hr>
+    {% endif %}
+
+
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}

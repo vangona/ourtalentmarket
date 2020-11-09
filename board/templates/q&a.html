@@ -1,0 +1,179 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<header class="major">
+  <span class="date">{% now "Y년 F j일 H:i" %}</span>
+  <h2>
+    FAQ
+  </h2><br />
+  <ul class="actions special">
+    <a href="#ex1" rel="modal:open" class="none"><button>규정사항 및 설명서</button></a>
+  </ul>
+  <p>
+  <div class="instruction">
+    <h3 style="text-align: left; padding: 1rem 2rem 0 2rem">Q1. 이곳은 뭘하는 곳인가요?</h3>
+    <p>
+      <li style="text-align: left; padding: 0 2rem 0 2rem">
+        '우리들의 재능장'은 학생들이 스스로 서비스를 <br>
+        제공해보는 경험을 할 수 있도록 만들어졌습니다.<br>
+        규제를 최대한 적게 두려고 합니다.<br>
+        법의 테두리 안에서 많은 것을 경험해보고, 경험을 쌓고,<br>
+        부딪히고, 깨지고, 실패도 해보면 좋겠습니다<br>
+      </li>
+    </p>
+    <hr>
+    <h3 style="text-align: left; padding: 1rem 2rem 0 2rem">Q2. 왜 할 수 있는게 없나요?</h3>
+    <p>
+      <li style="text-align: left; padding: 0 2rem 0 2rem">
+        원활한 서비스 제공과 개발과 운영동안 저의 멘탈을 위해서<br>
+        로그인 이후에 메뉴가 나올 수 있도록 만들었습니다.<br>
+        더 많은 서비스와 원활한 이용 위해서 가입 이후 로그인 부탁드립니다.
+      </li>
+    </p>
+    <hr>
+    <h3 style="text-align: left; padding: 1rem 2rem 0 2rem">Q3. ClassIOI나 SlowCampus, 탤잉 같은 곳인가요?</h3>
+    <p>
+      <li style="text-align: left; padding: 0 2rem 0 2rem">
+        아닙니다. 오히려 중고나라나 에브리타임에 가깝습니다.<br />
+        말씀하신곳은 '강의', '외주'등을 제공하는 '서비스'이지만<br />
+        여기는 누구나 서비스를 직접 만들어볼 수 있도록 도와주는 '커뮤니티'입니다.<br />
+        누구든 강의를 할 수 있고, 누구든 외주를 받을 수 있고<br />
+        누구든 자신이 해보고 싶던걸 해볼 수 있습니다.<br />
+        스스로 실패하고 깨닫고, 성장하기를 바랍니다.<br /><br />
+        <p>
+          물건파는 가게가 아니라 가게들이 들어선 시장인거죠.
+        </p>
+      </li>
+    </p>
+    <hr>
+    <h3 style="text-align: left; padding: 1rem 2rem 0 2rem">Q4. 저는 재능이 뛰어나지는 않은데 해도 되나요?</h3>
+    <p>
+      <li style="text-align: left; padding: 0 2rem 0 2rem">
+        당연히 가능합니다.<br>
+        여기는 판매에 중점을 두는 것이 아니라<br>
+        많은 것을 경험하는 것에 중점을 둡니다.<br>
+        대신 수준에 맞는 금액을 책정해야합니다.<br>
+        가격 책정이 제대로 되지 않아 서비스가 원활하지 않은 것도<br>
+        여러가지로 좋은 경험이 될 것입니다.<br>
+      </li>
+    </p>
+    <hr>
+    <h3 style="text-align: left; padding: 1rem 2rem 0 2rem">Q5. 재능기부도 가능한가요?</h3>
+    <p>
+      <li style="text-align: left; padding: 0 2rem 0 2rem">
+        당연히 가능합니다.<br>
+        가격 책정은 전부 스스로가 합니다.<br>
+        어떤 가격이든 상관은 없지만, <br>
+        거기에 대한 책임도 본인이 져야합니다.
+      </li>
+    </p>
+  </div><br /></p>
+</header>
+<ul class="actions special">
+  <div id="ex1" class="modal">
+    <div style="height: 95%;
+    width: calc(100% - 1rem);
+    overflow:auto;
+    scrollbar-base-color:gold;
+    font-family:sans-serif;
+    padding:10px;" align="center">
+      <header class="major">
+        <h3>
+          규정사항 및 설명서
+        </h3>
+        <ol>
+          <li>
+            '우리들의 재능장'은 학생들이 스스로 서비스를 <br />
+            제공해보는 경험을 할 수 있도록 만들어졌습니다.
+          </li>
+          <br />
+          <li>
+            서비스 제공은 외주 / 강의 / 공예품 / 소모임 운영의 <br />
+            형태로 가능합니다.
+          </li>
+          <br />
+          <li>
+            서비스 제공은 장/모임을 등록 한 뒤, <br />
+            학생증 인증을 통해 승인 이후 가능합니다.
+          </li>
+          <br />
+          <li>
+            3개월 이상 관리되지 않은 서비스는 통지 이후 <br />
+            삭제될 수 있습니다.
+          </li>
+          <br />
+          <li>
+            불법적인 서비스 제공은 불가능합니다. <br />
+            ( ex) 집에서 감기약으로 쉽게 만드는 필로폰 제조 강의 )
+          </li>
+          <br />
+          <li>
+            적정 가격은 판매자 스스로 책정합니다.<br />
+            모든 건 보이지 않는 손에게 맡깁니다.<br />
+            기부를 해도, 비싸게 팔다가 안팔려도 좋습니다.<br />
+          </li>
+          <br />
+          <li>
+            서비스 제공은 학교 학생만 가능함을 원칙으로 하며,<br />
+            구매자는 외부인도 가능합니다.
+          </li>
+          <br />
+          <li>
+            외부인이 서비스를 제공하기 위해서는 <br />
+            사이트 운영자의 대면 허가가 필요합니다.
+          </li>
+          <br />
+          <li>
+            사기등, 불법적인 행동에 대한 책임은<br />
+            판매자에게 있습니다.
+          </li>
+          <br />
+          <li>
+            구매에서 선택에 대한 책임은 구매자에게 있습니다.<br />
+          </li>
+          <br />
+          <li>
+            사이트 운영자는
+            사이트 불편에 대한 책임만을 가집니다. <br />
+            다만 불법적인 활동 확인시
+            최선을 다해 법적 대처 하겠으며, <br />
+            정의수호를 돕겠습니다.
+          </li>
+          <br />
+          <li>
+            재능장 내 종교, 정치적 활동을 금지합니다. <br />
+            학생들의 꿈을 위해 만들어진 공간입니다. <br />
+            사안에 따라 적극적 법적 대처 하겠습니다.
+          </li>
+          <br />
+          <li>
+            발생하는 모든 수익에 대한
+            신고 의무는 판매자에게 있습니다.
+          </li>
+          <br>
+          <li>
+            이외의 사안에 대해서는 관례와 상식을 따릅니다. <br />
+          </li>
+        </ol>
+      </header>
+    </div>
+    <a href="#" rel="modal:close">닫기</a>
+  </div>
+  </div>
+</ul>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}

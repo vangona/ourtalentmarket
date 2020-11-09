@@ -1,0 +1,63 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>공지사항</h1>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2><a> 공지사항 </a></h2>
+    <hr>
+    <div style="text-align: left; border: 1px solid;">
+      <div style="display: block; padding: 2rem 2rem 1rem 2rem; border: 0.1px; margin-right: -4px;">
+        <div style="text-align: left; font-size: 1.1rem; font-weight: bold;">
+          {{ notice_main.notice.title }}
+        </div>
+        <hr>
+        <div style="text-align: center; margin: auto;">
+          <a class="image main" href="/notice/{{ notice_main.notice.id }}"><img
+              src="{{ notice_main.notice.image.url }}" /></a><br>
+        </div>
+        <hr>
+        <div style="text-align: left;">
+          <pre>{{ notice_main.notice.content }}</pre>
+        </div>
+      </div>
+    </div>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+<article class="post featured">
+  <header class="major">
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성날짜</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for notice in notices %}
+          <tr>
+
+            <th><a href="/notice/{{ notice.id }}">{{ notice.title }}</a></th>
+            <th><a href="/notice/{{ notice.id }}">{{ notice.writer }}</a></th>
+            <th>{{ notice.registered_dttm|date:'Y-m-d' }}</th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </header>
+</article>
+{% endblock %}

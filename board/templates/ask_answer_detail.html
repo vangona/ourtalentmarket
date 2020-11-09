@@ -1,0 +1,43 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2><a>Q. {{ questions.title }} </a></h2>
+    <div style="text-align: right;">
+      {{ questions.registered_dttm }}
+    </div>
+    <hr style="margin-top: 1rem;">
+    <div style="text-align: left; font-size: 1rem;">
+    {{ questions.content }}
+    </div>
+    {% for answer in answers %}
+    <hr style="margin-top: 3rem;">
+    <h2><a>A. {{ answer.title }} </a></h2>
+    <div style="text-align: right;">
+      {{ answer.registered_dttm }}
+    </div>
+    <hr style="margin-top: 1rem;">
+    <div style="text-align: left; font-size: 1rem;">
+      {{ answer.content }}
+    </div>
+    {% endfor %}
+    <div class="button" style="float: right;"><a href="/ask/answer/" class="none">돌아가기</a></div>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}

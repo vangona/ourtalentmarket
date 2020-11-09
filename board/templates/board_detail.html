@@ -1,0 +1,27 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2><a> {{ image.content.title }} </a></h2>
+    <hr>
+    <div class="image-wrapper">
+      <div class="image">
+        <img src="{{ image.image.url }}" />
+        <div style="text-align: left; font-size: 1rem;">
+          {{ image.content.description }}
+        </div>
+      </div>
+    </div><br>
+    <div class="button"><a href="/board/board/">돌아가기</a></div>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>재능장</h1>
+<p>
+  여러분이 가지고 있는 재능을 사고 팔 수 있습니다. <br />
+  외주의 형태 혹은 강의의 형태로도요.
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+{% for board in boards %}
+<article class="post featured">
+  <header class="major">
+    <h2><a> {{ board.content.title }} </a></h2>
+    <div style="text-align: right;">
+      {{ board.content.writer }}, {{ board.content.registered_dttm }}
+    </div>
+    <hr style="margin-top: 1rem;">
+    <div class="image-wrapper">
+      {% if board.image.url == None %}
+      <div class="image main">
+        <img src="{{ board.image.url }}" />
+      </div>
+      {% endif %}
+      <div style="text-align: left; font-size: 1rem;">
+        <pre>{{ board.content.description }}</pre>
+      </div>
+    </div>
+    <hr>
+    {% ifequal board.market.admin userinfo %}
+    <a href="/board/market/delete/{{ board.id }}" class="none"><button onclick="return confirm('삭제하시겠습니까?')">삭제하기</button></a>
+    {% endifequal %}
+  </header>
+
+  <!--pagination-->
+
+    <div class="row mt-2">
+      <div class="col-12" style="padding-left: 0;">
+        <nav>
+          <ul class="pagination justify-content-center"">
+            {% if boards.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?p={{ boards.previous_page_number }}">이전으로</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#">이전으로</a>
+            </li>
+            {% endif %}
+            <li class="page-item">
+              <a class="page-link" href="#">{{ boards.number }} / {{ boards.paginator.num_pages }}</boards></a>
+            </li>
+            {% if boards.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?p={{ boards.next_page_number }}">다음으로</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#">다음으로</a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  {% if board.market.index_name == "재능장" %}
+  <a href="/board/market/{{ board.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
+  {% elif board.market.index_name == "소모임" %}
+  <a href="/board/group/{{ board.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
+  {% elif board.market.index_name == "수공예품" %}
+  <a href="/board/handcraft/{{ board.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
+  {% endif %}
+</article>
+
+
+
+{% endfor %}
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}

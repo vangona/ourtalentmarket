@@ -1,0 +1,38 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2>정보 수정 하기</h2>
+    <hr>
+    <form method="POST" action="." enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
+        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+          placeholder="{{ userinfo.usernickname }}" name="{{ field.name }}">
+      </div>
+      {% endfor %}
+      <ul class="actions">
+        <li><input type="submit" value="수정" /></li>
+      </ul>
+    </form>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}

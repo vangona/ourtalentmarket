@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>우리들의 재능장</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" href="/static/css/dropzone.css" />
+  <noscript>
+    <link rel="stylesheet" href="/static/css/noscript.css" /></noscript>
+</head>
+
+<body class="is-preload">
+  <!-- Wrapper -->
+  <div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+      <div class="content">
+        <div class="inner">
+          {% if messages %}
+          {% for message in messages %}
+          <h1>{{ message.tags }}</h1>
+          <p>{{ message.message }}</p>
+          {% endfor %}
+          {% elif userinfo %}
+          <h2>우리들의 재능장</h2><br />
+          <p>
+            {{ userinfo.usernickname }}님이 스스로 만들어 나가는 장터입니다
+          </p>
+          {% else %}
+          <h2>우리들의 재능장</h2><br />
+          <p>
+            우리가 우리 스스로 만들어 나가는 장터입니다
+          </p>
+          {% endif %}
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#intro">소개</a></li>
+          <li><a href="#work">재능장</a></li>
+          <li><a href="#ddat">소모임</a></li>
+          <li><a href="#ggee">공예장터</a></li>
+          {% if userinfo != None %}
+          <li><a href="/board/market/register/">만들기</a></li>
+          <li><a href="/board/want/register/">요청하기</a></li>
+          {% else %}
+          <li><a href="/login/">로그인</a></li>
+          <li><a href="/register/">회원가입</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <div id="main">
+      <!-- Intro -->
+      <article id="intro">
+        <h2 class="major">소개</h2>
+        <span class="image main"><img src="https://cdn.jsdelivr.net/gh/vangona/talent_m@latest/images/ddat/pic01.jpg"
+            alt="" /></span>
+        <p>
+          솔직히 여기서 할게 없어서 술이나 마시거나<br>
+          집에서 게임합니다. 문화 기반이 너무 없습니다.
+        </p>
+        <p>
+          대학에서는 돈을 들여하기에는 참여자가 적어서 어렵습니다.
+          <br />
+          내가 하고자 하는 것은 잘 열리지도 않습니다.
+        </p>
+        <p>
+          동아리는 들어가면 너무 부담스럽고
+          <br />
+          그냥 소소하게 하고 싶습니다.
+        </p>
+        <p>
+          내 재능을 뽐내고 싶습니다.
+        </p>
+        <p>그런 하고 싶은 것이 많은<br />
+          청춘 여러분을 위해서 판을 만들었습니다.</p>
+        <p>중고나라나 에브리타임 같은 커뮤니티입니다.</p>
+        <button type="primary" onclick="location.href='/ask/qna/'">FAQ 바로가기</a>
+      </article>
+
+      <!-- Work -->
+      <article id="work">
+        <h2 class="major">재능장</h2>
+        <span class="image main"><img src="https://cdn.jsdelivr.net/gh/vangona/talent_m@latest/images/ddat/pic02.png"
+            alt="" /></span>
+        <p>
+          재능장은 외주/강의의 형태로 진행할 수 있습니다.<br />
+        </p>
+        <p>
+          PPT를 못만드는데 디자인적인 PPT가 필요하신가요?<br />
+          잘만드는 학교 사람에게 부탁해보는건 어떨까요?
+        </p>
+        <p>
+          할 줄 아는데 프로가 아니라서 외주 받기는 어렵다구요?<br />
+          포트폴리오를 만들어보는건 어떨까요?
+        </p>
+        <p>
+          무언가 새로운 것을 배우고 싶은데 논산은 어렵다구요?<br />
+          주변에서 능력자를 찾아봅시다!
+        </p>
+        <ul class="alt">
+          <li>
+            <button type="primary" onclick="location.href='/board/market/'">자세히 알아보기</a>
+          </li>
+        </ul>
+      </article>
+
+      <!-- ddat -->
+      <article id="ddat">
+        <h2 class="major">소모임</h2>
+        <span class="image main"><img src="https://cdn.jsdelivr.net/gh/vangona/talent_m@latest/images/ddat/pic03.jpg"
+            alt="" /></span>
+        <p>동아리는 부담스럽고, 원하는 동아리도 없다구요?</p>
+        <p>
+          같이 카페에 앉아 철학을 논하거나<br />
+          반찬을 만들어서 다 같이 모여 먹는 간단한 소모임이 어떨까요?<br />
+          놀뫼의 노을을 보며 달리는 노을런을 기획해보는건 어떨까요?<br />
+          그런 당신들을 위한 멍석입니다.
+        </p>
+        <p>
+          우리가 만들어나가는 문화들입니다.
+        </p>
+        <ul class="alt">
+          <li>
+            <button type="primary" onclick="location.href='/board/group/'">자세히 알아보기</a>
+          </li>
+        </ul>
+      </article>
+
+      <!-- ggee -->
+      <article id="ggee">
+        <h2 class="major">수공예품</h2>
+        <span class="image main"><img src="https://cdn.jsdelivr.net/gh/vangona/talent_m@latest/images/ddat/pic04.jpg"
+            alt="" /></span>
+        <p>집에서 많은 것들을 만들었는데 썩히기는 아깝다구요?</p>
+        <p>금손인걸 뽐내고 싶으신데 자리가 없다구요?</p>
+        <p>
+          간단히 다른 사람들에게 선보여보세요.<br />
+          작은 돈이라도 다른 사람이 사준다는건 정말 대단한 뿌듯함을 줍니다<br />
+        </p>
+        <ul class="alt">
+          <li>
+            <button type="primary" onclick="location.href='/board/handcraft/'">자세히 알아보기</a>
+          </li>
+        </ul>
+      </article>
+
+      <!-- About -->
+      <!-- <article id="about">
+          <h2 class="major">나눔장</h2>
+          <span class="image main"
+            ><img src="https://cdn.jsdelivr.net/gh/vangona/talent_m/images/ddat/pic05.jpg" alt=""
+          /></span>
+          <p>중화로운 평고나라</p>
+        </article> -->
+
+      <!-- Contact -->
+      <!-- <article id="contact">
+        <h2 class="major">장/모임 만들기</h2>
+        <form>
+          <div class="fields">
+            <div class="field half">
+              <label for="market_name">만들고 싶은 장/소모임 이름</label>
+              <input type="text" name="market_name" id="market_name" placeholder="장돌뱅이명" />
+            </div>
+            <div class="field half">
+              <label for="index_name">분류</label>
+              <select name="index_name" id="index_name">
+                <option value="재능장">재능장</option>
+                <option value="공예품">수공예품</option>
+                <option value="소모임">소모임</option>
+              </select>
+            </div>
+          </div>
+        </form>
+        <form method="POST" action="{% url 'apis_views_market_create' %}" class="dropzone" id="uploader"
+          enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="dz-message" data-dz-message><span>드래그 드랍하거나, 클릭하여 이미지를 선택해주세요.</span></div>
+          <div class="fallback">
+            <input name="file" type="name" />
+          </div>
+        </form>
+        <form>
+          <div class="fields">
+            <div class="field">
+              <label for="content">장/소모임에 대한 설명</label>
+              <textarea name="content" id="content" rows="4"></textarea>
+            </div>
+          </div>
+          <ul class="actions">
+            <li>
+              <input type="submit" value="Send Message" class="primary" />
+            </li>
+            <li><input type="reset" value="Reset" /></li>
+          </ul>
+        </form>
+        <ul class="icons">
+          <li>
+            <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands fa-facebook-f"><span
+                class="label">Facebook</span></a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands fa-instagram"><span
+                class="label">Instagram</span></a>
+          </li>
+        </ul>
+      </article>
+
+      <!-- Wants -->
+      <article id="wants">
+        <h2 class="major">장/모임 요청하기</h2>
+        <form method="POST" action="">
+          {% csrf_token %}
+          <div class="fields">
+            <div class="field half">
+              <label for="summary">한 줄 요약</label>
+              <input type="text" name="summary" id="summary" placeholder="한 줄 요약" />
+            </div>
+            <div class="field half">
+              <label for="index_name_w">분류</label>
+              <select name="index_name_w" id="index_name_w">
+                <option value="재능장">재능장</option>
+                <option value="공예품">수공예품</option>
+                <option value="소모임">소모임</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="content_w">원하는 장/소모임에 대한 설명</label>
+              <textarea name="content_w" id="content_w" rows="4"></textarea>
+            </div>
+          </div>
+          <ul class="actions">
+            <li>
+              <input type="submit" value="Send Message" class="primary" />
+            </li>
+            <li><input type="reset" value="Reset" /></li>
+          </ul>
+        </form>
+        <ul class="icons">
+          <li>
+            <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands fa-facebook-f"
+              target="_blank"><span class="label">Facebook</span></a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands fa-instagram"
+              target="_blank"><span class="label">Instagram</span></a>
+          </li>
+        </ul>
+      </article> -->
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p class="copyright">
+        &copy; 우리들의 재능장. Design: <a href="https://html5up.net">HTML5 UP</a>.
+      </p>
+    </footer>
+  </div>
+
+  <!-- 네이게이션 패널 -->
+  <div id="wrapperN" class="fade-in">
+    <div id="navPanel">
+      <nav id="navp">
+        <ul class="links">
+          <li><a href='/'>Home</a></li>
+          <blockquote style="font-style: normal;">
+            <li><a href='/notice/'>공지사항</a></li>
+            {% if userinfo == None %}
+            <li><a href='/login/'>로그인</a></li>
+            <li><a href='/register/'>회원가입</a></li>
+            {% else %}
+            <li><a href='/mypage/'>마이 페이지</a></li>
+            <li><a href='/logout/'>로그아웃</a></li>
+            {% endif %}
+            {% if userinfo.level == "admin" %}
+            <li><a href='/notice/admin/'>관리자 페이지</a></li>
+            {% endif %}
+          </blockquote>
+          <li><a href='/board/market/'>Market</a></li>
+          <blockquote style="font-style: normal;">
+            <li><a href='/board/market/'>재능장</a></li>
+            <li><a href='/board/group/'>소모임</a></li>
+            <li><a href='/board/handcraft/'>공예품장</a></li>
+          </blockquote>
+          <li><a href='/ask/answer/'>Ask</a></li>
+          <blockquote style="font-style: normal;">
+            <li><a href='/ask/answer/'>질문하기</a></li>
+            <li><a href='/ask/qna/'>Q&A</a></li>
+          </blockquote>
+        </ul>
+        <ul class="icons">
+          <li>
+            <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands fa-facebook-f"
+              target="_blank"><span class="label">Facebook</span></a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands fa-instagram"
+              target="_blank"><span class="label">Instagram</span></a>
+          </li>
+        </ul>
+      </nav>
+      <a href="#navPanel" class="close"></a>
+    </div>
+  </div>
+
+  <!-- BG -->
+  <div id="bg"></div>
+
+  <!-- Scripts -->
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/browser.min.js"></script>
+  <script src="/static/js/breakpoints.min.js"></script>
+  <script src="/static/js/util.js"></script>
+  <script src="/static/js/main.js"></script>
+  <!-- <script src="/static/js/dropzone.js"></script>
+
+  <script>
+
+    Dropzone.autoDiscover = false;
+
+    var dropZoneUploader = new Dropzone('form#uploader', {
+      init: function () {
+        var dropzone = this;
+
+        $('#upload').click(function () {
+          dropZoneUploader.processQueue();
+        });
+
+        dropzone.on("sending", function (file, xhr, formData) {
+          formData.append("market_name", $('#market_name').val());
+          formData.append("index_name", $('#index_name').val());
+          formData.append("content", $('#content').val());
+        });
+      },
+      parallelUploads: 10,
+      autoProcessQueue: false,
+      type: 'POST',
+      success: function () {
+        location.reload();
+      },
+      error: function (e) {
+        console.log(e)
+        alert('에러가 발생했습니다. 다시 시도해주세요.')
+      },
+      acceptedFiles: ".jpeg,.jpg,.png,.gif",
+      maxFilesize: 0.5,
+      uploadMultiple: false,
+    });
+
+  </script> -->
+
+</body>
+
+</html>

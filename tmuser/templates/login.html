@@ -1,0 +1,38 @@
+{% extends 'login_base.html' %}
+{% block body %}
+<!-- Wrapper -->
+<div id="wrapper">
+    <!-- Header -->
+    <header id="header" class="centered">
+        <div>
+            <div class="content">
+                <div class="inner" style="text-align: left;">
+                    <h2>로그인</h2><br />
+                    <div class="fields">
+                        <form method="POST" action=".">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                <input type="{{ field.field.widget.input_type }}" class="form-control"
+                                    id="{{ field.id_for_label }}" placeholder="{{ field.label }}"
+                                    name="{{ field.name }}">
+                            </div><br />
+                            {% if field.errors %}
+                            <span style="color: red">{{ field.errors }}</span>
+                            {% endif %}
+                            {% endfor %}
+                            <div align="left" style="max-width: 45%; display: inline-block; margin-right: 10%;">
+                                <a href="/register/" class="none"><input type="button" value="회원가입"></a>
+                            </div>
+                            <div align="right" style="max-width: 40%; display: inline-block;">
+                                <button type="submit">로그인</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+{% endblock %}

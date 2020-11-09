@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>우리들의 재능장</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/css/b_main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <noscript>
+    <link rel="stylesheet" href="/static/css/b_noscript.css" /></noscript>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  {% block style %}
+  {% endblock %}
+  <style>
+    #nav {
+      display: none;
+    }
+
+    header#header {
+      height: 0;
+    }
+  </style>
+</head>
+
+<body class="is-preload">
+  <!-- Wrapper -->
+  <div id="wrapper" class="fade-in">
+    <!-- Header -->
+    <header id="header">
+    </header>
+
+    <!-- Nav -->
+    <nav id="navp">
+      <ul class="links">
+        <li><a href='/'>Home</a></li>
+        <blockquote style="font-style: normal;">
+          <li><a href='/notice/'>공지사항</a></li>
+          {% if userinfo == None %}
+          <li><a href='/login/'>로그인</a></li>
+          <li><a href='/register/'>회원가입</a></li>
+          {% else %}
+          <li><a href='/mypage/'>마이 페이지</a></li>
+          <li><a href='/logout/'>로그아웃</a></li>
+          {% endif %}
+          {% if userinfo.level == "admin" %}
+          <li><a href='/notice/admin/'>관리자 페이지</a></li>
+          {% endif %}
+        </blockquote>
+        <li><a href='/board/market/'>Market</a></li>
+        <blockquote style="font-style: normal;">
+          <li><a href='/board/market/'>재능장</a></li>
+          <li><a href='/board/group/'>소모임</a></li>
+          <li><a href='/board/handcraft/'>공예품장</a></li>
+        </blockquote>
+        <li><a href='/ask/answer/'>Ask</a></li>
+        <blockquote style="font-style: normal;">
+          <li><a href='/ask/answer/'>질문하기</a></li>
+          <li><a href='/ask/qna/'>FAQ</a></li>
+        </blockquote>
+      </ul>
+      <ul class="icons">
+        <!-- <li>
+            <a href="#" class="icon brands fa-twitter"
+              ><span class="label">Twitter</span></a
+            >
+          </li> -->
+        <li>
+          <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands fa-facebook-f"
+            target="_blank"><span class="label">Facebook</span></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands fa-instagram" target="_blank"><span
+              class="label">Instagram</span></a>
+        </li>
+        <!-- <li>
+            <a href="#" class="icon brands fa-github"
+              ><span class="label">GitHub</span></a
+            >
+          </li> -->
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+      <!-- Featured Post -->
+      <article class="post featured">{% block main %} {% endblock %}</article>
+
+      <!-- Posts -->
+      {% block article %}
+      {% endblock %}
+      <!-- Footer -->
+      <footer>
+        <!-- <div class="pagination"> -->
+        <!-- {% if boards.has_previous %}
+                                <a class="page active" href="?p={{ boards.previous_page_number }}">이전으로</a>
+                              {% else %}
+                                <a class="page" href="#">이전으로</a>
+                              {% endif %}
+                                <a class="page active" href="#">{{ boards.number }} / {{ boards.paginator.num_pages }}</boards></a>
+                              {% if boards.has_next %}
+                                <a class="page active" href="?p={{ boards.next_page_number }}">다음으로</a>
+                              {% else %}
+                                <a class="page" href="#">다음으로</a>
+                              {% endif %} -->
+
+        <!--<a href="#" class="previous">Prev</a>-->
+        <!-- <a href="#" class="page active">1</a> -->
+        <!-- <a href="#" class="page">2</a>
+            <a href="#" class="page">3</a>
+            <span class="extra">&hellip;</span>
+            <a href="#" class="page">8</a>
+            <a href="#" class="page">9</a>
+            <a href="#" class="page">10</a>
+            <a href="#" class="next">Next</a> -->
+        <!-- </div> -->
+      </footer>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <section align="center">
+        <!-- <section>
+            <h3>Phone</h3>
+            <p><a href="#">(010)6232-4393</a></p>
+          </section> -->
+        <section>
+          <h3>Address</h3>
+          <p style="text-align: center;">
+            충남 논산시 대학로 121<br />
+            학생창업관 102호 나만의 서랍장
+          </p>
+        </section>
+        <section>
+          <h3>Email</h3>
+          <p style="text-align: center;"><a href="#">rlarhksrud14@gmail.com</a></p>
+        </section>
+        <section>
+          <h3>Social</h3>
+          <ul class="icons alt">
+            <!-- <li>
+                <a href="#" class="icon brands alt fa-twitter"
+                  ><span class="label">Twitter</span></a
+                >
+              </li> -->
+            <li>
+              <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands alt fa-facebook-f"
+                target="_blank"><span class="label">Facebook</span></a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands alt fa-instagram"
+                target="_blank"><span class="label">Instagram</span></a>
+            </li>
+            <!-- <li>
+                <a href="#" class="icon brands alt fa-github"
+                  ><span class="label">GitHub</span></a
+                >
+              </li> -->
+          </ul>
+        </section>
+      </section>
+    </footer>
+
+    <!-- Copyright -->
+    <div id="copyright">
+      <ul>
+        <li>&copy; Untitled</li>
+        <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  axios.defaults.xsrfCookieName = 'csrftoken'
+  axios.defaults.xsrfHeaderName = "X-CSRFToken"
+  axios.defaults.headers.common['X-CSRFToken'] = getCookie("csrftoken");
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <script src="/static/js/jquery.scrollex.min.js"></script>
+  <script src="/static/js/jquery.scrolly.min.js"></script>
+  <script src="/static/js/browser.min.js"></script>
+  <script src="/static/js/breakpoints.min.js"></script>
+  <script src="/static/js/b_util.js"></script>
+  <script src="/static/js/b_main.js"></script>
+  {% block script %}
+  {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>소모임</h1>
+<p>
+  반찬을 만들어서 다 같이 모여 먹는 간단한 소모임은 어떨까요?<br />
+  놀뫼의 노을을 보며 달리는 노을런을 기획해보는건 어떨까요?<br />
+  그런 당신들을 위한 멍석입니다.
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2><a>{{ market.market_name }}</a></h2>
+    <hr>
+    <div style="text-align: left; border: 1px solid;">
+      <div style="display: block; padding: 2rem 2rem 1rem 2rem; border: 0.1px; margin-right: -4px;">
+        <div style="text-align: center;">
+          <a class="image main" style="margin-bottom: 0px; vertical-align: middle;"><img src="{{ market.image.url }}" /></a>
+        </div>
+        <hr>
+        <div style="text-align: left;">
+          <pre>{{ market.content }}</pre>
+        </div>
+        <hr>
+        <div style="text-align: center; margin-bottom: 15px;">
+        <a href="#note" rel="modal:open" class="none"><button>'{{ market.market_name }}'에게 쪽지
+        남기기</button></a><br>
+        </div>
+      </div>
+    </div>
+  </header>
+</article>
+
+<!-- 쪽지 -->
+<ul class="actions special">
+  <div id="note" class="modal">
+    <div class="instruction" style="padding: 1rem;">
+      <h3>쪽지 남기기</h3>
+      <header class="major">
+        <label for="title" style="text-align: left;">쪽지 제목</label>
+        <input id="title" type="text" name="title"><br>
+        <label for="content" style="text-align: left;">내용</label>
+        <input id="content" type="text" name="content"><br>
+        <button id="sending" style="float: left;">보내기</button>
+      </header>
+    </div>
+    <a href="#" rel="modal:close" style="float: right;">닫기</a>
+  </div>
+  {% endblock %}
+
+  <!-- article -->
+  {% block article %}
+  <article class="post featured">
+    <header class="major">
+      <div class="table-wrapper">
+      {% if messages %}
+      <div class="container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          [{{ message.tags }}]
+          [{{ message.message }}]
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+        <table>
+          <thead>
+            {% if boards %}
+            <tr>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성날짜</th>
+            </tr>
+            {% endif %}
+          </thead>
+          <tbody>
+            {% if boards %}
+            {% for board in boards %}
+            <tr>
+              <th><a href="/board/group/detail/{{ market.id }}/{{ board.id }}">{{ board.content.title }}</a></th>
+              <th>{{ board.content.writer }}</th>
+              <th>{{ board.content.registered_dttm }}</th>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <p>
+              표시할 게시물이 없습니다.
+            </p>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+      {% ifequal market.admin userinfo %}
+      <a href="/write/{{ market.id }}" class="none"><button>글쓰기</button></a>
+      <hr>
+      <h3>정보 수정하기</h3>
+      <a href="/board/market/update/" class="none">
+        <div class="button">수정하기</div>
+      </a>
+      <hr>
+      <p style="margin-top: 10px;">글쓰기, 수정하기는 장/모임 관리자만 할 수 있습니다.</p>
+      {% endifequal %}
+    </header>
+  </article>
+  {% endblock %}
+
+  {% block script %}
+  <script>
+    $('#sending').click(function () {
+      var content = $('#content').val()
+      var title = $('#title').val()
+      $.ajax({
+        url: "{% url 'apis_views_note_create' %}",
+        type: 'POST',
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          content: content,
+          title: title,
+          receiver: '{{ market.id }}',
+        },
+        success: function () {
+          location.reload();
+        },
+        error: function (e) {
+          console.log(e)
+          alert('전송에 실패했습니다. 반복될 경우 문의사항에 남겨주세요.')
+        },
+      })
+    });
+  </script>
+  {% endblock %}

@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1 style="font-size: 4rem;">공예품장</h1>
+<p>
+  집에서 많은 것들을 만들었는데 썩히기는 아깝다구요?<br />
+  간단히 다른 사람들에게 선보여보세요.
+</p>
+{% endblock %}
+
+<!-- 네비게이션 바 -->
+
+{% block nav %}
+<nav id="nav">
+  <ul class="links">
+    <li><a href='#ex2' rel="modal:open" class="none">공예품장 설명서</a></li>
+    <li><a href='#ex1' rel="modal:open" class="none">공예품장 규정사항</a></li>
+    <li><a href='/board/market/register/'>장/모임 만들기</a></li>
+    <li><a href='/board/want/register/'>장/모임 요청하기</a></li>
+    {% if userinfo.level == "admin" %}
+    <li><a href='/notice/admin/'>관리자 페이지</a></li>
+    {% endif %}
+  </ul>
+  <ul class="icons">
+    <li>
+      <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands fa-facebook-f" target="_blank"><span
+          class="label">Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands fa-instagram" target="_blank"><span
+          class="label">Instagram</span></a>
+    </li>
+  </ul>
+</nav>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<header class="major" style="margin-bottom: 4rem;">
+  <span class="date" style="margin-bottom: 3rem;">{% now "Y년 F j일 H:i" %}</span>
+  <h2>
+    <a>오늘의 공예품장</a>
+  </h2>
+</header>
+<div style="border: 0.5px solid; text-aling: center; padding: 2rem;">
+    <p style="font-size: 1.2rem; display: inline-block;">'{{ board_main.handcraft.market_name }}'</p>
+    <a class="image main" href="/board/handcraft/{{ board_main.handcraft.id }}" style="margin-top: 0; margin-bottom: 2rem;"><img
+        src="{{ board_main.handcraft.image.url}}" alt="" /></a>
+    <pre style="margin-bottom: 0;">{{ board_main.handcraft_main }}</pre>
+</div>
+
+<br><a href="#ex2" rel="modal:open" class="none" style="margin-bottom: 0;"><button>공예품장 설명서</button></a>
+
+<!-- 모달 -->
+
+<!-- 공예품장 설명서 -->
+
+<ul class="actions special">
+  <div id="ex2" class="modal">
+    <div class="instruction" style="padding: 1rem;">
+      <h3>공예품 판매하기</h3>
+      <p>
+      <ol>
+        <li>내가 집에 만들어둔 무언가가 있는지 생각합니다.</li>
+        <li>있다면, 적정가격을 생각합니다.</li>
+        <li>장/모임 만들기를 통해등록합니다.</li>
+        <li>같은 학교 학생이라는걸 잊지 맙시다.</li>
+      </ol>
+      </p>
+      <hr>
+      <h3>공예품 구매하기</h3>
+      <p>
+      <ol>
+        <li>사고 싶은게 있는지 둘러봅니다.</li>
+        <li>맘에 드는 것이 있다면, 판매자에게 연락합니다.</li>
+        <li>바라는 것이 있다면, 장/모임 요청하기를 통해 요청해봅니다.</li>
+        <li>같은 학교 학생이라는걸 잊지 맙시다.</li>
+      </ol>
+      </p>
+    </div>
+    <a href="#" rel="modal:close">닫기</a>
+  </div>
+
+  <!-- 규정사항 -->
+
+  <ul class="actions special">
+    <div id="ex1" class="modal">
+      <header class="major">
+        <h2>
+          규정사항
+        </h2>
+        <ol>
+          <li>
+            직접만든 것만 판매 가능합니다.
+          </li>
+          <br />
+          <li>
+            수공예품에서 자신의 노력이나 재능보다 <br />
+            사서 쓰는 것의 비중이 더 높은 것은 판매가 금지됩니다. <br />
+            ( ex) 상업적 목적을 위해 옷을 떼다 팔거나, 리폼을 쪼끔 해서 파는 행위 등 )
+          </li>
+          <br />
+          <li>
+            법적으로 수공예품 생산이 금지되거나
+            제한된 것의 판매는 법령을 따릅니다. <br />
+            ( ex) 디퓨져, 향초등은 법적으로 신고 후 판매가 가능합니다. )<br />
+            자신이 판매하고자 하는 품목의
+            생산 관련 법 확인 후 판매가 필요합니다.<br />
+          </li>
+          <br />
+          <li>
+            적정 가격은 판매자 스스로 책정합니다.
+            모든 건 보이지 않는 손에게 맡깁니다.
+          </li>
+          <br />
+          <li>
+            판매자는 학교 학생만 가능하며,
+            구매자는 외부인도 가능합니다.
+          </li>
+          <br />
+          <li>
+            사기등, 불법적인 행동에 대한 책임은 판매자에게 있습니다.
+          </li>
+          <br />
+          <li>
+            구매에서 선택에 대한 책임은 구매자에게 있습니다.
+          </li>
+          <br />
+          <li>
+            사이트 운영자는 사이트 운영 불편에 대한 책임만을 가집니다. <br />
+            다만 불법적인 활동 확인시 최선을 다해 법적 대처 하겠으며 <br />
+            정의수호를 돕겠습니다.
+          </li>
+          <br />
+          <li>
+            공예품 판매장 내 종교, 정치적 활동을 금지합니다. <br />
+            학생들의 꿈을 위해 만들어진 공간입니다. <br />
+            사안에 따라 적극적 법적 대처 하겠습니다.
+          </li>
+          <br />
+          <li>
+            발생하는 모든 수익에 대한 신고 의무는 판매자에게 있습니다.
+          </li>
+        </ol>
+      </header>
+      <a href="#" rel="modal:close">닫기</a>
+    </div>
+
+    <!-- 모달 끝 -->
+  </ul>
+  {% endblock %}
+
+  <!-- article -->
+  {% block article %}
+  <header class="major">
+    <h3><a> 열려있는 공예품장 </a></h3>
+    <div style="text-align: left; height: 30rem; left; overflow:auto; scrollbar-base-color:gold;">
+      {% for board in boards %}
+      {% if board.authorization == "Y" %}
+      <div class="market" style="display: inline-block; padding: 1%; border: 0.1px; margin-right: -4px;">
+        <div class="market_name"
+          style="text-align: left; font-weight: bold; padding-bottom: 0.5rem; font-family: Source Sans Pro, Helvetica, sans-serif;">
+          {{ board.market_name }}
+        </div>
+        <a href="/board/handcraft/{{ board.id }}"><img src="{{ board.image_thumbnail.url }}" /></a><br>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </header>
+
+  <hr><br />
+
+  <h3><a> 누군가 바라는 공예품 </a></h3>
+  <br /><br />
+  <div class="table-wrapper" style="height: 10rem; overflow:auto; scrollbar-base-color:gold;">
+    <table>
+      <thead>
+        <tr>
+          <th>한 줄 요약</th>
+          <th>장/소모임에 대한 설명</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for want in boards_w %}
+        <tr>
+          <th>{{ want.summary}}</th>
+          <th>{{ want.content_w }}</th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endblock %}
+
+  {% block notice %}
+  <p style="text-align: center; border: 1px solid;">
+    <a href="#ex1" rel="modal:open" class="none">공예품장 규정사항 읽기</a>
+  </p>
+  {% endblock %}
+
+  {% block index_name %}
+  <div class="field half">
+    <label for="index_name">분류</label>
+    <select name="index_name" id="index_name">
+      <option value="수공예품">수공예품</option>
+    </select>
+  </div>
+  {% endblock %}
+
+  {% block index_name_w %}
+  <div class="field half">
+    <label for="index_name_w">분류</label>
+    <select name="index_name_w" id="index_name_w">
+      <option value="수공예품">수공예품</option>
+    </select>
+  </div>
+  {% endblock %}

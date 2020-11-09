@@ -1,0 +1,55 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2><a> 게시글 </a></h2><br>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>내용</th>
+            <th>작성자</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for image in images %}
+          <tr>
+            <th>{{ image.content.title }}</th>
+            <th><a href="/board/{{ image.id }}">{{ image.content.description }}</a></th>
+            <th>{{ image.content.writer }}</th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+<article class="post featured">
+  <header class="major">
+    <h2><a> 게시글 </a></h2>
+    <div style="text-align: left;">
+      {% for image in images %}
+      <div style="display: inline-block; padding: 1rem 2rem 1rem 2rem; border: 0.1px; margin-right: -4px;">
+        <div style="text-align: left; font-size: 1.1rem; font-weight: bold; padding-bottom: 0.5rem;">
+          {{ image.content.title }}
+        </div>
+        <a href="/board/{{ image.id }}"><img src="{{ image.image_thumbnail.url }}" /></a><br>
+        <div style="text-align: left;">
+          {{ image.content.description }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </header>
+</article>
+{% endblock %}

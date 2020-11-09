@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>우리들의 재능장</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/static/css/b_main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <noscript>
+    <link rel="stylesheet" href="/static/css/b_noscript.css" /></noscript>
+</head>
+
+<body class="is-preload">
+  <!-- Wrapper -->
+  <div id="wrapper" class="fade-in">
+    <!-- Intro -->
+
+    <div id="intro">
+      {% if messages %}
+      {% for message in messages %}
+      <h1>{{ message.tags }}</h1>
+      <p>{{ message.message }}</p>
+      {% endfor %}
+      {% else %}
+      {% block intro %} {% endblock %}
+      {% endif %}
+      <ul class="actions">
+        <li>
+          <a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+      <a href="/" class="logo">우리들의 재능장</a>
+    </header>
+
+    <!-- Nav -->
+    {% block nav %}
+    {% endblock %}
+    <div id="navPanel">
+      <nav id="navp">
+        <ul class="links">
+          <li><a href='/'>Home</a></li>
+          <blockquote style="font-style: normal;">
+            <li><a href='/notice/'>공지사항</a></li>
+            {% if userinfo == None %}
+            <li><a href='/login/'>로그인</a></li>
+            <li><a href='/register/'>회원가입</a></li>
+            {% else %}
+            <li><a href='/mypage/'>마이 페이지</a></li>
+            <li><a href='/logout/'>로그아웃</a></li>
+            {% endif %}
+            {% if userinfo.level == "admin" %}
+            <li><a href='/notice/admin/'>관리자 페이지</a></li>
+            {% endif %}
+          </blockquote>
+          <li><a href='/board/market/'>Market</a></li>
+          <blockquote style="font-style: normal;">
+            <li><a href='/board/market/'>재능장</a></li>
+            <li><a href='/board/group/'>소모임</a></li>
+            <li><a href='/board/handcraft/'>공예품장</a></li>
+          </blockquote>
+          <li><a href='/ask/answer/'>Ask</a></li>
+          <blockquote style="font-style: normal;">
+            <li><a href='/ask/answer/'>질문하기</a></li>
+            <li><a href='/ask/qna/'>FAQ</a></li>
+          </blockquote>
+        </ul>
+        <ul class="icons">
+          <li>
+            <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands fa-facebook-f"
+              target="_blank"><span class="label">Facebook</span></a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands fa-instagram"
+              target="_blank"><span class="label">Instagram</span></a>
+          </li>
+        </ul>
+      </nav>
+      <a href="#navPanel" class="close"></a>
+    </div>
+
+    <!-- Main -->
+    <div id="main">
+      <!-- Featured Post -->
+      <article class="post featured">{% block main %} {% endblock %}</article>
+
+      <!-- Posts -->
+      <article class="post featured">
+        {% block article %}
+        <!-- <article>
+          <header>
+            <span class="date">April 24, 2017</span>
+            <h2>
+              <a href="#"
+                >Sed magna<br />
+                ipsum faucibus</a
+              >
+            </h2>
+          </header>
+          <a href="#" class="image fit"
+            ><img src="/static/images/board/pic02.jpg" alt=""
+          /></a>
+          <p>
+            Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in
+            faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna
+            etiam.
+          </p>
+          <ul class="actions special">
+            <li><a href="#" class="button">Full Story</a></li>
+          </ul>
+        </article>
+        <article>
+          <header>
+            <span class="date">April 22, 2017</span>
+            <h2>
+              <a href="#"
+                >Primis eget<br />
+                imperdiet lorem</a
+              >
+            </h2>
+          </header>
+          <a href="#" class="image fit"
+            ><img src="/static/images/board/pic03.jpg" alt=""
+          /></a>
+          <p>
+            Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in
+            faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna
+            etiam.
+          </p>
+          <ul class="actions special">
+            <li><a href="#" class="button">Full Story</a></li>
+          </ul>
+        </article>
+        <article>
+          <header>
+            <span class="date">April 18, 2017</span>
+            <h2>
+              <a href="#"
+                >Ante mattis<br />
+                interdum dolor</a
+              >
+            </h2>
+          </header>
+          <a href="#" class="image fit"
+            ><img src="/static/images/board/pic04.jpg" alt=""
+          /></a>
+          <p>
+            Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in
+            faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna
+            etiam.
+          </p>
+          <ul class="actions special">
+            <li><a href="#" class="button">Full Story</a></li>
+          </ul>
+        </article>
+        <article>
+          <header>
+            <span class="date">April 14, 2017</span>
+            <h2>
+              <a href="#"
+                >Tempus sed<br />
+                nulla imperdiet</a
+              >
+            </h2>
+          </header>
+          <a href="#" class="image fit"
+            ><img src="/static/images/board/pic05.jpg" alt=""
+          /></a>
+          <p>
+            Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in
+            faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna
+            etiam.
+          </p>
+          <ul class="actions special">
+            <li><a href="#" class="button">Full Story</a></li>
+          </ul>
+        </article>
+        <article>
+          <header>
+            <span class="date">April 11, 2017</span>
+            <h2>
+              <a href="#"
+                >Odio magna<br />
+                sed consectetur</a
+              >
+            </h2>
+          </header>
+          <a href="#" class="image fit"
+            ><img src="/static/images/board/pic06.jpg" alt=""
+          /></a>
+          <p>
+            Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in
+            faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna
+            etiam.
+          </p>
+          <ul class="actions special">
+            <li><a href="#" class="button">Full Story</a></li>
+          </ul>
+        </article>
+        <article>
+          <header>
+            <span class="date">April 7, 2017</span>
+            <h2>
+              <a href="#"
+                >Augue lorem<br />
+                primis vestibulum</a
+              >
+            </h2>
+          </header>
+          <a href="#" class="image fit"
+            ><img src="/static/images/board/pic07.jpg" alt=""
+          /></a>
+          <p>
+            Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in
+            faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna
+            etiam.
+          </p>
+          <ul class="actions special">
+            <li><a href="#" class="button">Full Story</a></li>
+          </ul>
+        </article> -->
+        {% endblock %}
+      </article>
+
+      <!-- Footer -->
+      <!-- <footer>
+        <div class="pagination">
+          {% if boards.has_previous %}
+          <a class="page active" href="?p={{ boards_w.previous_page_number }}">이전으로</a>
+          {% else %}
+          <a class="page">이전으로</a>
+          {% endif %}
+          <a class="page active" href="#">{{ boards_w.number }} / {{ boards_w.paginator.num_pages }}</a>
+          {% if boards_w.has_next %}
+          <a class="page active" href="?p={{ boards_w.next_page_number }}">다음으로</a>
+          {% else %}
+          <a class="page">다음으로</a>
+          {% endif %}
+
+          <a href="#" class="previous">Prev</a>
+          <a href="#" class="page active">1</a>
+          <a href="#" class="page">2</a>
+          <a href="#" class="page">3</a>
+          <span class="extra">&hellip;</span>
+          <a href="#" class="page">8</a>
+          <a href="#" class="page">9</a>
+          <a href="#" class="page">10</a>
+          <a href="#" class="next">Next</a>
+        </div>
+      </footer> -->
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      {% if userinfo %}
+
+      <!-- 만들기 -->
+
+      <section>
+        <form method="post" action="." enctype="multipart/form-data">
+          {% csrf_token %}
+          <h2>장/모임 만들기</h2>
+          {% block notice %}
+          {% endblock %}
+          <div class="fields">
+            <div class="field half">
+              <label for="market_name">만들고 싶은 장/소모임 이름</label>
+              <input type="text" name="market_name" id="market_name" placeholder="장돌뱅이명" />
+            </div>
+            {% block index_name %}
+            {% endblock %}
+            <div class="field">
+              <label for="image">대표 사진(JPG,JPEG,PNG,GIF 512kb미만, 1장) </label>
+              <input type="file" name="image" id="id_image" placeholder="대표 사진" style=" margin-bottom: 8px;"
+                accept="image/gif, image/jpg, image/jpeg, image/png" onchange="checkFile(this)" />
+              <a href="https://heictojpg.com/" target="_blank" class="none" style="font-size: 12px;">
+                <div style="border: 1px solid; text-align: center; width: 100%; margin-bottom: 8px;">HEIC파일(애플
+                  이미지) 변환하기 </div>
+              </a>
+              <a href="https://blogsearch.kr/resize/" target="_blank" class="none" style="font-size: 12px;">
+                <div style="border: 1px solid; text-align: center; width: 100%;">사진 크기 줄이기</div>
+              </a>
+            </div>
+            <div class=" field">
+              <label for="message">장/소모임에 대한 설명</label>
+              <textarea name="content" id="content" rows="4"></textarea>
+            </div>
+          </div>
+          <p class="text-muted">
+            모든 항목을 작성해주셔야 합니다.
+          </p>
+          <ul class="actions">
+            <li><input type="submit" value="만들기" /></li>
+          </ul>
+        </form>
+      </section>
+
+      <!-- 요청하기 -->
+
+      <section class="split contact">
+        <section class="alt">
+          <form method="POST" action="." id="market-creater">
+            {% csrf_token %}
+            <h2>장/모임 요청하기</h2>
+            <div class="fields">
+              <div class="field half">
+                <label for="summary">한 줄 요약</label>
+                <input type="text" name="summary" id="summary" placeholder="한 줄 요약" />
+              </div>
+              {% block index_name_w %}
+              {% endblock %}
+              <div class="field">
+                <label for="message">장/소모임에 대한 설명</label>
+                <textarea name="content_w" id="content_w" rows="4"></textarea>
+              </div>
+            </div>
+            <ul class="actions">
+              <li><input type="submit" value="만들기" /></li>
+            </ul>
+          </form>
+        </section>
+        <!-- <section>
+            <h3>Phone</h3>
+            <p><a href="#">(010)6232-4393</a></p>
+          </section> -->
+        <section>
+          <h3>Address</h3>
+          <p>
+            충남 논산시 대학로 121<br />
+            학생창업관 102호 나만의 서랍장
+          </p>
+        </section>
+        <section>
+          <h3>Email</h3>
+          <p><a href="#">rlarhksrud14@gmail.com</a></p>
+        </section>
+        <section>
+          <h3>Social</h3>
+          <ul class="icons alt">
+            <!-- <li>
+                <a href="#" class="icon brands alt fa-twitter"
+                  ><span class="label">Twitter</span></a
+                >
+              </li> -->
+            <li>
+              <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands alt fa-facebook-f"
+                target="_blank"><span class="label">Facebook</span></a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands alt fa-instagram"
+                target="_blank"><span class="label">Instagram</span></a>
+            </li>
+            <!-- <li>
+                <a href="#" class="icon brands alt fa-github"
+                  ><span class="label">GitHub</span></a
+                >
+              </li> -->
+          </ul>
+        </section>
+      </section>
+      {% else %}
+      <section align="center">
+        <!-- <section>
+            <h3>Phone</h3>
+            <p><a href="#">(010)6232-4393</a></p>
+          </section> -->
+        <section>
+          <h3>Address</h3>
+          <p style="text-align: center;">
+            충남 논산시 대학로 121<br />
+            학생창업관 102호 나만의 서랍장
+          </p>
+        </section>
+        <section>
+          <h3>Email</h3>
+          <p style="text-align: center;"><a href="#">rlarhksrud14@gmail.com</a></p>
+        </section>
+        <section>
+          <h3>Social</h3>
+          <ul class="icons alt">
+            <!-- <li>
+                <a href="#" class="icon brands alt fa-twitter"
+                  ><span class="label">Twitter</span></a
+                >
+              </li> -->
+            <li>
+              <a href="https://www.facebook.com/yourownchestofdrawer" class="icon brands alt fa-facebook-f"
+                target="_blank"><span class="label">Facebook</span></a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/your_own_drawer__/" class="icon brands alt fa-instagram"
+                target="_blank"><span class="label">Instagram</span></a>
+            </li>
+            <!-- <li>
+                <a href="#" class="icon brands alt fa-github"
+                  ><span class="label">GitHub</span></a
+                >
+              </li> -->
+          </ul>
+        </section>
+      </section>
+      {% endif %}
+    </footer>
+
+    <!-- Copyright -->
+    <div id="copyright">
+      <ul>
+        <li>&copy; Untitled</li>
+        <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <script src="/static/js/jquery.scrollex.min.js"></script>
+  <script src="/static/js/jquery.scrolly.min.js"></script>
+  <script src="/static/js/browser.min.js"></script>
+  <script src="/static/js/breakpoints.min.js"></script>
+  <script src="/static/js/b_util.js"></script>
+  <script src="/static/js/b_main.js"></script>
+  <script type="text/javascript">
+    function checkFile(k) {
+      var file = k.files;
+      if (file[0].size > 1024 * 1024 * 0.5) {
+        alert('512kb 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB')
+        k.outerHTML = k.outerHTML;
+      }
+      else return;
+    };
+  </script>
+</body>
+
+</html>

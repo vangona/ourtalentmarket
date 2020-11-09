@@ -1,0 +1,53 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <label for="note_title">쪽지 제목</label>
+    <input id="note_title" type="text" name="note_title">
+    <label for="note_content">쪽지 내용</label>
+    <input id="note_content" type="text" name="note_content">
+    <button id="note_button">보내기</button>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}
+
+{% block script %}
+<script>
+  $('#note_button').click(function () {
+    var title = $('#note_title').val()
+    var content = $('#note_content').val()
+    $.ajax({
+      url: "{% url 'apis_views_note_create' %}",
+      type: 'POST',
+      data: {
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        title: title,
+        content: content,
+      },
+      success: function () {
+        location.reload();
+      },
+      error: function (e) {
+        console.log(e)
+        alert('에러')
+      },
+    })
+  });
+</script>
+{% endblock %}

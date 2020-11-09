@@ -1,0 +1,54 @@
+{% extends "write_base.html" %}
+
+<!-- 스타일 -->
+{% block style %}
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#id_content').summernote({
+      height: 300
+    });
+  }); 
+</script>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<div class="row mt-5">
+  <div class="col-12 text-center">
+    <h1>공지하기</h1>
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-12">
+    {{ error }}
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-12">
+    <form method="POST" action="." enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
+        {% ifequal field.name 'content' %}
+        <textarea class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}"></textarea>
+        {% else %}
+        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+          placeholder="{{ field.label }}" name="{{ field.name }}">
+        {% endifequal %}
+      </div>
+      {% if field.errors %}
+      <span style="color: red">{{ field.errors }}</span>
+      {% endif %}
+      {% endfor %}
+      <ul class="actions" style="float: right;">
+        <li><input type="submit" value="공지하기" class="right" /></li>
+      </ul>
+    </form>
+  </div>
+</div><br>
+<div class="button" style="float: right;"><a href="/notice/admin/" class="none">돌아가기</a></div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2>{{ userinfo.usernickname }}님에게 온 쪽지입니다</h2>
+    <hr>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>관련 장/모임</th>
+            <th>작성자</th>
+            <th>작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for note in notes %}
+          <tr>
+            <th><a href="/mypage/note/read/{{ userinfo.id }}/{{ note.id }}">{{ note.title }}</a></th>
+            <th><a href="/mypage/note/read/{{ userinfo.id }}/{{ note.id }}">{{ note.market }}</a></th>
+            <th><a href="/mypage/note/read/{{ userinfo.id }}/{{ note.id }}">{{ note.writer.usernickname }}</a></th>
+            <th><a href="/mypage/note/read/{{ userinfo.id }}/{{ note.id }}">{{ note.registered_dttm|date:'Y-m-d' }}</a></th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="button" style="float: right;"><a href="/ask/answer/" class="none">돌아가기</a></div>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}

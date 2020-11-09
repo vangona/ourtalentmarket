@@ -1,0 +1,49 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>공지사항</h1>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<header class="major">
+  <article class="post featured">
+    <h2>메인 재능장 등록</h2>
+    <form action="." method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        {% if markets == None %}
+        <p>
+          메인으로 할 재능장이 없습니다.
+        </p>
+        {% endif %}
+        <label for="market_name" style="float: left;">공지 선택</label>
+        <select name="market_name" id="id_market_name">
+          {% for market in markets %}
+          <option value="{{ market.market_name }}">{{ market.market_name }}</option>
+          {% endfor %}
+        </select>
+        <br />
+        <label for="id_main" style="float: left;">메인 여부</label>
+        <select name="main" id="id_main">
+          <option value="Y">Y</option>
+          <option value="N">N</option>
+        </select>
+        <label for="id_main_content">메인 내용</label>
+        <textarea class="form-control" id="id_main_content" name="main_content" placeholder="메인 재능장 내용"></textarea>
+      </div>
+      {% if field.errors %}
+      <span style="color: red">{{ field.errors }}</span>
+      {% endif %}
+      <input type="submit" value="제출">
+    </form>
+  </article>
+  <div class="button" style="float: right;"><a href="/notice/admin/" class="none">돌아가기</a></div>
+  {% endblock %}
+
+  <!-- article -->
+  {% block article %}
+  {% endblock %}
