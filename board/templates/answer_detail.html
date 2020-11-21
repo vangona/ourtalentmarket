@@ -24,7 +24,7 @@
         <select name="question" id="id_question">
           {% for question in questions %}
           {% if question.answered == "N" %}
-          <option value="{{ question.title }}">{{ question.title }}</option>
+          <option value="{{ question.id }}">{{ question.title }}</option>
           {% endif %}
           {% endfor %}
         </select>

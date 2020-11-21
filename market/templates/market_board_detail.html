@@ -13,36 +13,78 @@
 <!-- 메인 -->
 
 {% block main %}
-{% for board in boards %}
 <article class="post featured">
   <header class="major">
-    <h2><a> {{ board.content.title }} </a></h2>
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                [{{ message.tags }}]
+                [{{ message.message }}]
+                </div>
+        {% endfor %}
+        </div><br>
+    {% endif %}
+    <h2><a> {{ content.content.title }} </a></h2>
     <div style="text-align: right;">
-      {{ board.content.writer }}, {{ board.content.registered_dttm }}
+      {{ content.content.writer }}, {{ content.content.registered_dttm }}
     </div>
     <hr style="margin-top: 1rem;">
     <div class="image-wrapper">
-      {% if board.image.url == None %}
+      {% if content.image.url != None %}
       <div class="image main">
-        <img src="{{ board.image.url }}" />
+        <img src="{{ content.image.url }}" />
       </div>
       {% endif %}
       <div style="text-align: left; font-size: 1rem;">
-        <pre>{{ board.content.description }}</pre>
+        <pre>{{ content.content.description }}</pre>
       </div>
     </div>
     <hr>
-    {% ifequal board.market.admin userinfo %}
-    <a href="/board/market/delete/{{ board.id }}" class="none"><button onclick="return confirm('삭제하시겠습니까?')">삭제하기</button></a>
+
+  <!--댓글-->
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                [{{ message.tags }}]
+                [{{ message.message }}]
+                </div>
+        {% endfor %}
+        </div><br>
+    {% endif %}
+    <div>
+        {% for comment in comments %}
+        <div style="text-align: left; border: 1px solid; padding: 0.2rem;">
+            <div style="display: inline-block; padding-left: 0.2rem; font-size: 0.8rem;">
+                {{ comment.writer }}, <div class="text-muted" style="display: inline; font-size: 0.7rem;">{{ comment.registered_dttm }}</div> |
+            </div>
+            <div style="display: inline-block; padding-left:0.2rem; padding-right:0.2rem;">
+                {{ comment.content }}
+            </div>
+            <div style="display: inline-block; font-size: 0.7rem; float:right;">
+                <a href="/board/market/board/comment/delete/{{ comment.id }}" style="display: inline-block;" class="none" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기 </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+    <label for="comment" style="float: left;">댓글 작성</label>
+    <textarea id="comment"></textarea><br>
+    <button style="float: right;" id="commenting">댓글 쓰기</button><br>
+    <hr>
+    {% ifequal content.market.admin userinfo %}
+    <a href="/board/market/board/update/{{ content.id }}" class="none"><button>수정하기</button></a>
+    <a href="/board/market/delete/{{ content.id }}" class="none"><button onclick="return confirm('삭제하시겠습니까?')">삭제하기</button></a>
     {% endifequal %}
   </header>
+</article>
 
   <!--pagination-->
-
+<!-- <article class="post featured">
     <div class="row mt-2">
       <div class="col-12" style="padding-left: 0;">
         <nav>
-          <ul class="pagination justify-content-center"">
+          <ul class="pagination justify-content-center">
             {% if boards.has_previous %}
             <li class="page-item">
               <a class="page-link" href="?p={{ boards.previous_page_number }}">이전으로</a>
@@ -67,22 +109,47 @@
           </ul>
         </nav>
       </div>
-    </div>
+    </div> -->
 
-  {% if board.market.index_name == "재능장" %}
-  <a href="/board/market/{{ board.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
-  {% elif board.market.index_name == "소모임" %}
-  <a href="/board/group/{{ board.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
-  {% elif board.market.index_name == "수공예품" %}
-  <a href="/board/handcraft/{{ board.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
+  {% if content.market.index_name == "재능장" %}
+  <a href="/board/market/{{ content.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
+  {% elif content.market.index_name == "소모임" %}
+  <a href="/board/group/{{ content.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
+  {% elif content.market.index_name == "수공예품" %}
+  <a href="/board/handcraft/{{ content.market_id }}" class="none"><div class="button" style="float: right;">돌아가기</div></a>
   {% endif %}
 </article>
 
 
 
-{% endfor %}
 {% endblock %}
 
 <!-- article -->
 {% block article %}
+{% endblock %}
+
+{% block script %}
+
+    <script>
+    $('#commenting').click(function () {
+      var content = $('#comment').val()
+      $.ajax({
+        url: "{% url 'apis_views_comment_create' %}",
+        type: 'POST',
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          content: content,
+          board: '{{ content.id }}',
+        },
+        success: function () {
+          location.reload();
+        },
+        error: function (e) {
+          console.log(e)
+          alert('댓글에 실패했습니다. 반복될 경우 문의사항에 남겨주세요.')
+        },
+      })
+    });
+  </script>
+
 {% endblock %}

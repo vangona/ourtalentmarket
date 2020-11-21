@@ -12,58 +12,28 @@
 <!-- 메인 -->
 
 {% block main %}
-{% for board in boards %}
 <article class="post featured">
   <header class="major">
-    <h2><a> {{ board.title }} </a></h2>
+    <h2><a> {{ notes.title }} </a></h2>
     <div style="text-align: right;">
-      {{ board.writer.usernickname }}, {{ board.registered_dttm }}
+      {{ notes.writer.usernickname }}, {{ notes.registered_dttm }}
     </div>
     <hr style="margin-top: 1rem;">
     <div>
       <div style="font-style: italic;">
-        '{{ board.market }}'에 관련된 쪽지입니다.
+        '{{ notes.market }}'에 관련된 쪽지입니다.
       </div><br>
       <p>
-        <pre>{{ board.content }}</pre>
+        <pre>{{ notes.content }}</pre>
       </p>
     </div>
     <hr>
     <a href="#reply" rel="modal:open" class="none"><button>답장하기</button></a>
-    <a href="/mypage/note/delete/{{ board.id }}" class="none"><button onclick="return confirm('삭제하시겠습니까?')">삭제하기</button></a>
-    <div class="row mt-2">
-      <div class="col-12" style="padding-left: 0;">
-        <nav>
-          <ul class="pagination justify-content-center"">
-            {% if boards.has_previous %}
-            <li class="page-item">
-              <a class="page-link" href="?p={{ boards.previous_page_number }}">이전으로</a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-              <a class="page-link" href="#">이전으로</a>
-            </li>
-            {% endif %}
-            <li class="page-item">
-              <a class="page-link" href="#">{{ boards.number }} / {{ boards.paginator.num_pages }}</boards></a>
-            </li>
-            {% if boards.has_next %}
-            <li class="page-item">
-              <a class="page-link" href="?p={{ boards.next_page_number }}">다음으로</a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-              <a class="page-link" href="#">다음으로</a>
-            </li>
-            {% endif %}
-          </ul>
-        </nav>
-      </div>
-    </div>
-    <div class="button" style="float: right;"><a href="/mypage/note/" class="none">돌아가기</a></div>
+    <a href="/mypage/note/delete/{{ notes.id }}" class="none"><button onclick="return confirm('삭제하시겠습니까?')">삭제하기</button></a>
+    <hr>
+    <div class="button" style="float: right;"><a href="/mypage/" class="none">돌아가기</a></div>
   </header>
 </article>
-{% endfor %}
 
 <!-- 답장 -->
 <ul class="actions special">
@@ -75,8 +45,8 @@
         <input id="title" type="text" name="title"><br>
         <label for="market_name" style="text-align: left;">관련 장/모임</label>
         <input id="market_name" type="text" name="market_name"><br>
-        <label for="content" style="text-align: left;">쪽지 제목</label>
-        <input id="content" type="text" name="content"><br>
+        <label for="content" style="text-align: left;">쪽지 내용</label>
+        <textarea id="content" name="content" style="height: 5rem;"></textarea><br>
         <button id="sending" style="float: left;">보내기</button>
       </header>
     </div>

@@ -12,7 +12,7 @@ from .forms import MypageUpdateForm
 
 # Create your views here.
 
-
+@method_decorator(login_required, name="dispatch")
 class NoteView(TemplateView):
 
     template_name = "note.html"

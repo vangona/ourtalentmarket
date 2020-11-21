@@ -51,6 +51,8 @@ from market.views import (
     MarketBoardDetailView,
     MarketUpdateView,
     BoardDeleteView,
+    CommentDeleteView,
+    MarketBoardUpdateView,
 )
 from apis.views import (
     ContentCreateView,
@@ -58,6 +60,7 @@ from apis.views import (
     WantCreateView,
     NoteCreateView,
     ReplyCreateView,
+    CommentCreateView,
 )
 from mypage.views import (
     NoteView,
@@ -76,7 +79,9 @@ urlpatterns = [
     path("board/board/", BoardView.as_view()),
     path("board/market/", MarketView.as_view()),
     path("board/market/delete/<int:pk>", BoardDeleteView),
-    path("board/market/update/", MarketUpdateView.as_view()),
+    path("board/market/board/comment/delete/<int:pk>", CommentDeleteView),
+    path("board/market/update/<int:pk>", MarketUpdateView.as_view()),
+    path("board/market/board/update/<int:pk>", MarketBoardUpdateView.as_view()),
     path("board/market/<int:pk>", MarketDetailView.as_view()),
     path("board/market/detail/<int:market>/<int:pk>", MarketBoardDetailView.as_view()),
     path("board/market/register/", MarketRegisterView.as_view()),
@@ -137,5 +142,10 @@ urlpatterns += [
         "views/reply/create/",
         ReplyCreateView.as_view(),
         name="apis_views_reply_create",
+    ),
+        path(
+        "views/comment/create/",
+        CommentCreateView.as_view(),
+        name="apis_views_comment_create",
     ),
 ]

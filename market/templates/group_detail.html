@@ -16,8 +16,12 @@
 {% block main %}
 <article class="post featured">
   <header class="major">
-    <h2><a>{{ market.market_name }}</a></h2>
-    <hr>
+    <h2><a>{{ market.market_name }}</a></h2><br>
+    <div style="text-align: right;">
+        <a style="display: inline-block; font-size: 90%;" class="none" >운영자 : {{ market.admin }}</a><br>
+        <a style="display: inline-block; font-size: 90%;" class="none" >등록일 : {{ market.registered_dttm|date:'Y-m-d' }}</a>
+    </div>
+    <hr style="margin-top: 1rem;">
     <div style="text-align: left; border: 1px solid;">
       <div style="display: block; padding: 2rem 2rem 1rem 2rem; border: 0.1px; margin-right: -4px;">
         <div style="text-align: center;">
@@ -28,10 +32,20 @@
           <pre>{{ market.content }}</pre>
         </div>
         <hr>
+        {% ifequal market.admin userinfo %}
+        <h3 style="text-align: center;">정보 수정하기</h3>
+        <a href="/board/market/update/{{ market.id }}" class="none">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <div class="button">수정하기</div>
+          </div>
+        </a>
+        {% endifequal %}
+        {% ifnotequal market.admin userinfo %}
         <div style="text-align: center; margin-bottom: 15px;">
         <a href="#note" rel="modal:open" class="none"><button>'{{ market.market_name }}'에게 쪽지
         남기기</button></a><br>
         </div>
+        {% endifnotequal %}
       </div>
     </div>
   </header>
@@ -47,6 +61,10 @@
         <input id="title" type="text" name="title"><br>
         <label for="content" style="text-align: left;">내용</label>
         <input id="content" type="text" name="content"><br>
+        <div class="text-muted">
+            가입되지 않은 사용자는 답장을 받을 수 없습니다.<br>
+            답장이 필요하시면 로그인 해주세요.
+        </div><br>
         <button id="sending" style="float: left;">보내기</button>
       </header>
     </div>
@@ -58,7 +76,6 @@
   {% block article %}
   <article class="post featured">
     <header class="major">
-      <div class="table-wrapper">
       {% if messages %}
       <div class="container">
         {% for message in messages %}
@@ -69,9 +86,11 @@
         {% endfor %}
       </div>
       {% endif %}
+      {% if boards %}
+      <h3>{{ market.market_name }}</h3><br>
+      <div class="table-wrapper">
         <table>
           <thead>
-            {% if boards %}
             <tr>
               <th>제목</th>
               <th>작성자</th>
@@ -88,21 +107,17 @@
               <th>{{ board.content.registered_dttm }}</th>
             </tr>
             {% endfor %}
-            {% else %}
-            <p>
-              표시할 게시물이 없습니다.
-            </p>
-            {% endif %}
           </tbody>
         </table>
       </div>
+      {% else %}
+      <p>
+        장/모임 관리자는 글을 작성할 수 있어요.<br>
+        게시글을 통해 장/모임을 운영해보세요.
+      </p>
+      {% endif %}
       {% ifequal market.admin userinfo %}
       <a href="/write/{{ market.id }}" class="none"><button>글쓰기</button></a>
-      <hr>
-      <h3>정보 수정하기</h3>
-      <a href="/board/market/update/" class="none">
-        <div class="button">수정하기</div>
-      </a>
       <hr>
       <p style="margin-top: 10px;">글쓰기, 수정하기는 장/모임 관리자만 할 수 있습니다.</p>
       {% endifequal %}

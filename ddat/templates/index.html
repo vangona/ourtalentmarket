@@ -29,12 +29,13 @@
           <p>{{ message.message }}</p>
           {% endfor %}
           {% elif userinfo %}
-          <h2>우리들의 재능장</h2><br />
+          <a href="/notice/"><h2>공지사항 읽기</h2></a><br />
           <p>
             {{ userinfo.usernickname }}님이 스스로 만들어 나가는 장터입니다
           </p>
+            <a href="/mypage/" style="border-bottom: none;"><button>마이페이지({{ counts }})</button></a>
           {% else %}
-          <h2>우리들의 재능장</h2><br />
+          <a href="/notice/"><h2>우리들의 재능장</h2></a><br />
           <p>
             우리가 우리 스스로 만들어 나가는 장터입니다
           </p>
@@ -258,7 +259,7 @@
               target="_blank"><span class="label">Instagram</span></a>
           </li>
         </ul>
-      </article> -->
+      </article>
     </div>
 
     <!-- Footer -->
@@ -293,6 +294,11 @@
             <li><a href='/board/market/'>재능장</a></li>
             <li><a href='/board/group/'>소모임</a></li>
             <li><a href='/board/handcraft/'>공예품장</a></li>
+          </blockquote>
+          <li><a href='/board/market/register'>Create</a></li>
+          <blockquote style="font-style: normal;">
+            <li><a href='/board/market/register/'>장/모임 만들기</a></li>
+            <li><a href='/board/want/register/'>장/모임 요청하기</a></li>
           </blockquote>
           <li><a href='/ask/answer/'>Ask</a></li>
           <blockquote style="font-style: normal;">

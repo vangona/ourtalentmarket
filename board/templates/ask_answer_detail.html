@@ -14,26 +14,28 @@
 {% block main %}
 <article class="post featured">
   <header class="major">
-    <h2><a>Q. {{ questions.title }} </a></h2>
+    {% for question in questions %}
+    <h2><a>Q.{{ question.title }}</a></h2>
     <div style="text-align: right;">
-      {{ questions.registered_dttm }}
+      {{ question.registered_dttm }}
     </div>
     <hr style="margin-top: 1rem;">
     <div style="text-align: left; font-size: 1rem;">
-    {{ questions.content }}
+      <pre>{{ question.content }}</pre>
     </div>
+    {% endfor %}
+    <hr>
     {% for answer in answers %}
-    <hr style="margin-top: 3rem;">
-    <h2><a>A. {{ answer.title }} </a></h2>
+    <h2><a>A.{{ answer.title }}</a></h2>
     <div style="text-align: right;">
       {{ answer.registered_dttm }}
     </div>
     <hr style="margin-top: 1rem;">
     <div style="text-align: left; font-size: 1rem;">
-      {{ answer.content }}
+      <pre>{{ answer.content }}</pre>
     </div>
     {% endfor %}
-    <div class="button" style="float: right;"><a href="/ask/answer/" class="none">돌아가기</a></div>
+    <a href="/ask/answer/" class="none"><div class="button" style="float: right;">돌아가기</div></a>
   </header>
 </article>
 {% endblock %}

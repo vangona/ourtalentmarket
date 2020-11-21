@@ -57,7 +57,12 @@ class NoticeDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.request.session.get("user") != None:
+            context["userinfo"] = Tmuser.objects.get(
+                useremail=self.request.session.get("user")
+            )
         context["notice"] = NoticeModel.objects.get(id=self.kwargs["pk"])
+
         return context
 
 

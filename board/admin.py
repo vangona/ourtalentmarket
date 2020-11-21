@@ -1,10 +1,16 @@
 from django.contrib import admin
-from .models import Questions, Content, Image, Answer
+from .models import Questions, Content, Image, Answer, Comment
 
 # Register your models here.
 class ImageInline(admin.TabularInline):
     model = Image
 
+class CommentAdmin(admin.ModelAdmin):
+
+    list_display = ("writer", "content", "id")
+
+
+admin.site.register(Comment, CommentAdmin)
 
 class ContentAdmin(admin.ModelAdmin):
     inlines = [ImageInline]

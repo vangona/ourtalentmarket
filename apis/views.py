@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from ddat.decorator import login_required, admin_required
-from board.models import Content, Image
+from board.models import Content, Image, Comment
 from tmuser.models import Tmuser
 from ddat.models import Market, Wants
 from mypage.models import Note
@@ -28,7 +28,10 @@ class NoteCreateView(BaseView):
         title = request.POST.get("title", "")
         content = request.POST.get("content", "")
         market = Market.objects.get(id=request.POST.get("receiver")).market_name
-        writer = Tmuser.objects.get(useremail=self.request.session.get("user"))
+        if self.request.session.get("user", "") == "":
+            writer = Tmuser.objects.get(useremail="rlarhksrud14@gmail.com")
+        else :
+            writer = Tmuser.objects.get(useremail=self.request.session.get("user"))
         receiver = Market.objects.get(id=request.POST.get("receiver")).admin
 
         note = Note.objects.create(
@@ -61,6 +64,23 @@ class ReplyCreateView(BaseView):
 
         return self.response({})
 
+class CommentCreateView(BaseView):
+    @method_decorator(csrf_exempt)
+    def post(self, request):
+        content = request.POST.get("content", "")
+        board = Image.objects.get(id=request.POST.get("board"))
+        if self.request.session.get("user", "") == "":
+            writer = Tmuser.objects.get(useremail="rlarhksrud14@gmail.com")
+        else :
+            writer = Tmuser.objects.get(useremail=self.request.session.get("user"))
+
+        comment = Comment.objects.create(
+            content=content,
+            board=board,
+            writer=writer,
+        )
+
+        return self.response({})
 
 @method_decorator(login_required, name="dispatch")
 class ContentCreateView(BaseView):

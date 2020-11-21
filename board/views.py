@@ -151,32 +151,29 @@ class QuestionView(FormView):
             return context
 
 
-class QuestionDetailView(DetailView):
+class QuestionDetailView(TemplateView):
     template_name = "ask_answer_detail.html"
-    queryset = Answer.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        questions = Questions.objects.filter(id=self.kwargs["pk"])
         answers = Answer.objects.filter(question=Questions.objects.get(id=self.kwargs["pk"]))
-        question = answers.last().question_id
-        questions = Questions.objects.get(id=question)
 
-        context["answers"] = answers
         context["questions"] = questions
+        context["answers"] = answers
 
         return context
 
-
 @method_decorator(admin_required, name="dispatch")
 class AnswerView(FormView):
-    template_name = "answer.html"
+    template_name = "answer_detail.html"
     form_class = AnswerForm
-    success_url = "/ask/answer/"
+    success_url = "/ask/answer/answer/"
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         with transaction.atomic():
             userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
-            question = Questions.objects.get(title=form.data.get("question"))
+            question=Questions.objects.get(id=form.data.get("question"))
             answer = Answer(
                 question=question,
                 title=form.data.get("title"),

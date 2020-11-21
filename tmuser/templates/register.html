@@ -165,7 +165,7 @@
             <label for="{{ field.id_for_label }}" align="left">{{ field.label }}</label>
             <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
                 placeholder="{{ field.label }}" name="{{ field.name }}">
-        </div><br />
+        </div>
         {% endif %}
         {% if field.errors %}
         <span style="color: red">{{ field.errors }}</span>
@@ -173,10 +173,14 @@
         {% endfor %}
         <p class="text-muted">
             모든 항목을 작성해주셔야합니다.<br>
-            <a class="none" style="font-size: 0.7rem;">※ 제가 아직 미개한 개발자라 사이트 이용에 어려운 점이 있다면 꼭 질문하기에 올려주세요.</a>
+            <a class="none" style="font-size: 0.7rem;">※ 제작자가 조무래기 1인 기획개발자라서, 사이트 이용에 어려운 점이 있다면 꼭 질문하기에 올려주세요.</a>
         </p>
-        <div align="left">
-            <button type="submit">회원가입</button>
+        <ul class="actions special">
+            <a href="#ex1" rel="modal:open" class="float: left;">규정사항 읽기</a>
+        </ul>
+        <div align="left" class="text-muted">
+            <button type="submit">회원가입</button><br>
+            <a class="none" style="font-size: 0.7rem;">※ 회원가입시 규정사항 준수에 동의함으로 합니다. </a>
         </div>
     </form>
 </div>

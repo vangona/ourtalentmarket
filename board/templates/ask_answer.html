@@ -31,6 +31,9 @@
     <div class="instruction" style="padding: 3rem;">
       <div class="row mt-5">
         <div class="col-12">
+          <div class="text-muted" style="text-align:left; font-size: 90%;">
+              로그아웃해서 질문하면 익명질문이 가능합니다.
+          </div><br>
           <form method="POST" action=".">
             {% csrf_token %}
             {% for field in form %}

@@ -27,6 +27,13 @@ class MarketForm(forms.Form):
             self.add_error("image", "값이 없습니다.")
             self.add_error("content", "값이 없습니다.")
 
+        try :
+            Market.objects.get(market_name=market_name)
+            self.add_error("market_name", "동일한 장/모임 이름이 존재합니다.")
+
+        except:
+            pass
+
 
 class WantsForm(forms.Form):
     summary = forms.CharField(
@@ -43,7 +50,14 @@ class WantsForm(forms.Form):
         index_name_w = cleaned_data.get("index_name_w")
         content_w = cleaned_data.get("content_w")
 
-        if not (summary and index_name_w and content_w):
+        if not summary:
             self.add_error("summary", "값이 없습니다.")
+
+        if not index_name_w:
             self.add_error("index_name_w", "값이 없습니다.")
+
+        if not content_w:
             self.add_error("content_w", "값이 없습니다.")
+
+        else:
+            pass;

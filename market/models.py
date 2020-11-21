@@ -40,3 +40,4 @@ class Handcraft(Market):
         db_table = "handcraft"
         verbose_name = "공예품장"
         verbose_name_plural = "공예품장"
+

@@ -1,0 +1,38 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>Q&A</h1>
+<p>
+  자주 묻는 질문
+</p>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<article class="post featured">
+  <header class="major">
+    <h2>게시글 수정 하기</h2>
+    <hr>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="title" style="text-align: left;">게시글 제목</label>
+      <input id="title" type="text" name="title" value="{{ content.content.title }}"><br>
+      <label for="content" style="text-align: left;">게시글 내용</label>
+      <textarea id="content" name="content" style="height: 5rem;">{{ content.content.description }}</textarea><br>
+      <ul class="actions">
+        <li><input type="submit" value="수정"/></li>
+      </ul>
+    </form>
+  </header>
+</article>
+{% endblock %}
+
+<!-- article -->
+{% block article %}
+{% endblock %}
+
+{% block script %}
+{% endblock %}

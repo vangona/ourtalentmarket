@@ -21,10 +21,12 @@
       {% for field in form %}
       <div class="form-group">
         <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
-        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
-          placeholder="{{ userinfo.usernickname }}" name="{{ field.name }}">
+        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" name="{{ field.name }}">
       </div>
       {% endfor %}
+      <p class="text-muted" style="font-size: 90%;">
+          *공란으로 두시면 이전 정보가 그대로 사용됩니다.
+      </p>
       <ul class="actions">
         <li><input type="submit" value="수정" /></li>
       </ul>

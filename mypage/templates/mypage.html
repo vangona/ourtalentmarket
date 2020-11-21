@@ -14,6 +14,16 @@
 {% block main %}
 <article class="post featured">
   <header class="major">
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                [{{ message.tags }}]
+                [{{ message.message }}]
+                </div>
+        {% endfor %}
+        </div><br>
+    {% endif %}
     <h2>{{ userinfo.usernickname }}님의 마이 페이지</h2>
     <hr>
     <h3>내 정보 수정하기</h3>

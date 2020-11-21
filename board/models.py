@@ -41,7 +41,7 @@ class Questions(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(
-        Questions, on_delete=models.CASCADE, related_name="answer", null=True
+        Questions, on_delete=models.CASCADE, related_name="answer"
     )
 
     title = models.CharField(max_length=32, verbose_name="답변 제목")
@@ -57,7 +57,6 @@ class Answer(models.Model):
         db_table = "answer"
         verbose_name = "문의 답변"
         verbose_name_plural = "문의 답변"
-
 
 class Content(models.Model):
     title = models.CharField(max_length=64, verbose_name="제목")
@@ -99,3 +98,18 @@ class Image(models.Model):
 
     class Meta:
         ordering = ["order"]
+
+class Comment(models.Model):
+    board = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
+    writer = models.ForeignKey(Tmuser, on_delete=models.CASCADE)
+    content = models.TextField(verbose_name="댓글 내용")
+    registered_dttm = models.DateTimeField(auto_now_add=True, verbose_name="등록시간")
+    modified_dttm = models.DateTimeField(auto_now=True, verbose_name="수정시간")
+
+    def __str(self):
+        return self.board
+
+    class Meta:
+        db_table = "comment"
+        verbose_name = "댓글"
+        verbose_name_plural = "댓글"

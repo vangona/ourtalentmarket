@@ -9,7 +9,7 @@
     $('#id_content').summernote({
       height: 300
     });
-  }); 
+  });
 </script>
 {% endblock %}
 
@@ -34,10 +34,10 @@
       <div class="form-group">
         <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
         {% if field.name == 'content_w' %}
-        <textarea class="form-control" style="height: 5rem;" name="{{ field.name }}"
+        <textarea class="form-control" style="height: 10rem;" name="{{ field.name }}"
           id="{{ field.id_for_label }}"></textarea>
         {% elif field.name == 'index_name_w' %}
-        <select name="index_name" id="index_name">
+        <select name="index_name_w" id="index_name_w">
           <option value="재능장">재능장</option>
           <option value="수공예품">공예품장</option>
           <option value="소모임">소모임</option>

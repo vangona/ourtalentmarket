@@ -9,12 +9,12 @@
     $('#id_content').summernote({
       height: 300
     });
-  }); 
+  });
 </script>
 <script type="text/javascript">
   $(document).ready(function () {
     searchajax();
-  });                                                                   
+  });
 </script>
 {% endblock %}
 
@@ -43,7 +43,7 @@
       <div class="form-group">
         {% if field.name == 'content' %}
         <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
-        <textarea class="form-control" style="height: 5rem;" name="{{ field.name }}"
+        <textarea class="form-control" style="height: 10rem;" name="{{ field.name }}"
           id="{{ field.id_for_label }}"></textarea>
         {% elif field.name == 'index_name' %}
         <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
@@ -132,8 +132,23 @@
           </li>
           <br />
           <li>
-            서비스 제공은 학교 학생만 가능하며,<br />
+            서비스 제공은 건양대 학생만 가능함을 원칙으로 하며,<br />
             구매자는 외부인도 가능합니다.
+          </li>
+          <br />
+          <li>
+            건양대학생은 장/모임 개시일 기준<br />
+            휴학생, 재학생, 졸업 1년 이내의 졸업생을 말합니다.
+          </li>
+          <br />
+          <li>
+            후에 사이트가 커지면 **마켓이나 에타처럼<br>
+            지점을 늘리는 방식으로 규모를 키우겠습니다.
+          </li>
+          <br />
+          <li>
+            외부인이 서비스를 제공하기 위해서는 <br />
+            사이트 운영자의 대면 허가가 필요합니다.
           </li>
           <br />
           <li>
@@ -162,6 +177,15 @@
           <li>
             발생하는 모든 수익에 대한
             신고 의무는 판매자에게 있습니다.
+          </li>
+          <br>
+          <li>
+            기타 '우리들의 재능장' 운영에 <br />
+            지장이 생기는 행동은 제제될 수 있습니다.
+          </li>
+          <br>
+          <li>
+            이외의 사안에 대해서는 관례와 상식을 따릅니다. <br />
           </li>
         </ol>
       </header>
