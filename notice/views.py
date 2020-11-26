@@ -10,14 +10,17 @@ from .forms import (
     AuthorizeForm,
     NoticeMainForm,
     MarketMainForm,
+    IdAuthorizationForm,
 )
 from ddat.decorator import login_required, admin_required
-from tmuser.models import Tmuser
+from tmuser.models import Tmuser, WaitingId
 from ddat.models import Market
 from market.models import TalentMarket, Group, Handcraft
 from .models import NoticeModel, MainModel
 
 # Create your views here.
+
+
 @method_decorator(admin_required, name="dispatch")
 class AdminView(TemplateView):
     template_name = "admin.html"
@@ -73,7 +76,8 @@ class NoticeregisterView(FormView):
     success_url = "/notice/admin/register/"
 
     def form_valid(self, form):
-        userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
+        userinfo = Tmuser.objects.get(
+            useremail=self.request.session.get("user"))
         notice = NoticeModel(
             title=form.data.get("title"),
             image=self.request.FILES.get("image"),
@@ -248,7 +252,8 @@ class HandcraftMainView(FormView):
 
     def form_valid(self, form):
         if form.data.get("main") == "Y":
-            handcraft = Handcraft.objects.get(market_name=form.data.get("market_name"))
+            handcraft = Handcraft.objects.get(
+                market_name=form.data.get("market_name"))
 
             main = MainModel.objects.last()
 
@@ -296,5 +301,29 @@ class GroupMainView(FormView):
                 useremail=self.request.session.get("user")
             )
         context["markets"] = Group.objects.all()
+
+        return context
+
+
+@method_decorator(admin_required, name="dispatch")
+class IdAuthorizationView(FormView):
+    template_name = "id_authorization.html"
+    form_class = IdAuthorizationForm
+    success_url = "/notice/admin/id_check/"
+
+    def form_valid(self, form):
+        waitingid = WaitingId.objects.get(id=form.data.get("user_id"))
+        userinfo = Tmuser.objects.get(id=waitingid.waiting_user.id)
+        userinfo.id_verification = form.data.get("authorization")
+
+        userinfo.save()
+
+        waitingid.delete()
+
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["users"] = WaitingId.objects.all()
 
         return context

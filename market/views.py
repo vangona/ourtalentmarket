@@ -27,7 +27,8 @@ class MarketView(TemplateView):
         if self.request.session.get("user") != None:
             context = super().get_context_data(**kwargs)
             markets = Market.objects.all()
-            all_boards = Wants.objects.filter(index_name_w="재능장").order_by("-id")
+            all_boards = Wants.objects.filter(
+                index_name_w="재능장").order_by("-id")
             page = int(self.request.GET.get("p", 1))
             paginator = Paginator(all_boards, 10)
 
@@ -44,7 +45,8 @@ class MarketView(TemplateView):
         else:
             context = super().get_context_data(**kwargs)
             markets = Market.objects.all()
-            all_boards = Wants.objects.filter(index_name_w="재능장").order_by("-id")
+            all_boards = Wants.objects.filter(
+                index_name_w="재능장").order_by("-id")
             page = int(self.request.GET.get("p", 1))
             paginator = Paginator(all_boards, 10)
 
@@ -55,69 +57,6 @@ class MarketView(TemplateView):
 
             return context
 
-    def post(self, request):
-        with transaction.atomic():
-            if request.POST.get("market_name") != None:
-                userinfo = Tmuser.objects.get(useremail=request.session.get("user"))
-                admin = userinfo
-                market_name = request.POST.get("market_name", "")
-                index_name = request.POST.get("index_name", "")
-                image = self.request.FILES.get("image")
-                content = request.POST.get("content", "")
-
-                if not (market_name and index_name and image and content):
-                    messages.error(request, "제출에 실패했습니다. 모든 항목을 채워야합니다.")
-
-                    return redirect("/board/market/")
-
-                try :
-                    Market.objects.get(market_name=market_name)
-                    messages.error(request, "제출에 실패했습니다. 동일한 장/모임 이름이 존재합니다.")
-
-                    return redirect("/board/market/")
-
-                except:
-                    market = Market.objects.create(
-                        admin=admin,
-                        market_name=market_name,
-                        index_name=index_name,
-                        image=image,
-                        content=content,
-                        authorization="N",
-                    )
-
-                    subject = f"새 장돌뱅이가 들어왔습니다. {userinfo.username}, {market_name}"
-                    message = f"{content} \n https://www.ourtalentmarket.com/admin"
-                    mail = EmailMessage(subject, message, to=["rlarhksrud14@gmail.com"])
-                    mail.send()
-
-                    messages.success(request, f"{market_name}, 성공적으로 제출 되었습니다.")
-
-                    return redirect("/board/market/")
-
-            else:
-                userinfo = Tmuser.objects.get(useremail=request.session.get("user"))
-                admin = userinfo
-                summary = request.POST.get("summary", None)
-                index_name_w = request.POST.get("index_name_w", None)
-                content_w = request.POST.get("content_w", None)
-
-                wants = Wants.objects.create(
-                    admin=admin,
-                    summary=request.POST.get("summary", None),
-                    index_name_w=request.POST.get("index_name_w", None),
-                    content_w=request.POST.get("content_w", None),
-                )
-
-                subject = f"새로운 바램이 들어왔습니다. {summary}, {index_name_w}"
-                message = f"{content_w} \n https://www.ourtalentmarket.com/admin"
-                mail = EmailMessage(subject, message, to=["rlarhksrud14@gmail.com"])
-                mail.send()
-
-                messages.success(request, f"{summary}, 성공적으로 제출 되었습니다.")
-
-                return redirect("/board/market/")
-
 
 @method_decorator(login_required, name="dispatch")
 class MarketRegisterView(FormView):
@@ -127,10 +66,12 @@ class MarketRegisterView(FormView):
 
     def form_valid(self, form):
         with transaction.atomic():
-            userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
+            userinfo = Tmuser.objects.get(
+                useremail=self.request.session.get("user"))
             market_name = form.data.get("market_name")
             index_name = form.data.get("index_name")
             content = form.data.get("content")
+            campus = form.data.get("campus")
 
             market = Market(
                 admin=userinfo,
@@ -139,12 +80,14 @@ class MarketRegisterView(FormView):
                 image=self.request.FILES.get("image"),
                 content=content,
                 authorization="N",
+                campus=campus,
             )
             market.save()
 
             subject = f"새 장돌뱅이가 들어왔습니다. {userinfo.username}, {market_name}"
             message = f"{content} \n https://www.ourtalentmarket.com/admin"
-            mail = EmailMessage(subject, message, to=["rlarhksrud14@gmail.com"])
+            mail = EmailMessage(subject, message, to=[
+                                "rlarhksrud14@gmail.com"])
             mail.send()
 
             messages.success(
@@ -174,10 +117,11 @@ class WantRegisterView(FormView):
 
     def form_valid(self, form):
         with transaction.atomic():
-            userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
-            summary=form.data.get("summary")
-            index_name_w=form.data.get("index_name_w")
-            content_w=form.data.get("content_w")
+            userinfo = Tmuser.objects.get(
+                useremail=self.request.session.get("user"))
+            summary = form.data.get("summary")
+            index_name_w = form.data.get("index_name_w")
+            content_w = form.data.get("content_w")
 
             wants = Wants(
                 admin=userinfo,
@@ -189,7 +133,8 @@ class WantRegisterView(FormView):
 
             subject = f"새로운 바램이 들어왔습니다. {summary}, {index_name_w}"
             message = f"{content_w} \n https://www.ourtalentmarket.com/admin"
-            mail = EmailMessage(subject, message, to=["rlarhksrud14@gmail.com"])
+            mail = EmailMessage(subject, message, to=[
+                                "rlarhksrud14@gmail.com"])
             mail.send()
 
             messages.success(self.request, f"{summary}, 성공적으로 제출 되었습니다.")
@@ -215,22 +160,27 @@ class MarketUpdateView(FormView):
     form_class = MarketUpdateForm
 
     def form_valid(self, form):
-        userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
+        userinfo = Tmuser.objects.get(
+            useremail=self.request.session.get("user"))
         market = Market.objects.get(
             market_name=form.data.get("market_for_update")
         )
 
-        if market.admin == userinfo :
+        if market.admin == userinfo:
 
             market_name = form.data.get("market_name")
             content = form.data.get("content")
+            select_name = form.data.get("select_name")
             image = self.request.FILES.get("image")
 
-            if market_name != "":
-               market.market_name = market_name
+            if market_name:
+                market.market_name = market_name
 
-            if content != "":
+            if content:
                 market.content = content
+
+            if select_name:
+                market.select_name = select_name
 
             if image != None:
                 market.image = image
@@ -241,7 +191,7 @@ class MarketUpdateView(FormView):
 
             return super().form_valid(form)
 
-        else :
+        else:
 
             messages.error(self.request, '권한이 없습니다.')
 
@@ -251,11 +201,11 @@ class MarketUpdateView(FormView):
 
         market = Market.objects.get(id=self.kwargs["pk"])
 
-        if market.index_name == "재능장" :
+        if market.index_name == "재능장":
             index_name = "market"
-        if market.index_name == "소모임" :
+        if market.index_name == "소모임":
             index_name = "group"
-        if market.index_name == "수공예품" :
+        if market.index_name == "수공예품":
             index_name = "handcraft"
 
         success_url = f"/board/{ index_name }/{ market.id }"
@@ -264,7 +214,8 @@ class MarketUpdateView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
+        userinfo = Tmuser.objects.get(
+            useremail=self.request.session.get("user"))
         market = Market.objects.get(id=self.kwargs["pk"])
 
         context["userinfo"] = userinfo
@@ -297,11 +248,11 @@ class MarketBoardUpdateView(FormView):
         content = Image.objects.get(id=self.kwargs["pk"])
         market = content.market
 
-        if market.index_name == "재능장" :
+        if market.index_name == "재능장":
             index_name = "market"
-        if market.index_name == "소모임" :
+        if market.index_name == "소모임":
             index_name = "group"
-        if market.index_name == "수공예품" :
+        if market.index_name == "수공예품":
             index_name = "handcraft"
 
         success_url = f"/board/market/detail/{ market.id }/{ content.id }"
@@ -316,15 +267,16 @@ class MarketBoardUpdateView(FormView):
 
         return context
 
+
 def BoardDeleteView(request, pk):
     board = Image.objects.get(id=pk)
     market_id = board.market.id
 
-    if board.market.index_name == "재능장" :
+    if board.market.index_name == "재능장":
         index_name = "market"
-    if board.market.index_name == "소모임" :
+    if board.market.index_name == "소모임":
         index_name = "group"
-    if board.market.index_name == "수공예품" :
+    if board.market.index_name == "수공예품":
         index_name = "handcraft"
 
     board.delete()
@@ -337,20 +289,19 @@ def CommentDeleteView(request, pk):
     board_id = comment.board.id
     market_id = comment.board.market.id
 
-    if comment.board.market.index_name == "재능장" :
+    if comment.board.market.index_name == "재능장":
         index_name = "market"
-    if comment.board.market.index_name == "소모임" :
+    if comment.board.market.index_name == "소모임":
         index_name = "group"
-    if comment.board.market.index_name == "수공예품" :
+    if comment.board.market.index_name == "수공예품":
         index_name = "handcraft"
 
-    if Tmuser.objects.get(useremail=request.session.get("user")) != comment.writer :
+    if Tmuser.objects.get(useremail=request.session.get("user")) != comment.writer:
         messages.warning(request, '권한 없음')
         return redirect(f"/board/{ index_name }/detail/{ market_id }/{ board_id }")
 
-    else :
+    else:
         comment.delete()
-
 
     return redirect(f"/board/market/detail/{ market_id }/{ board_id }")
 
@@ -409,7 +360,8 @@ class HandcraftView(TemplateView):
         if self.request.session.get("user") != None:
             context = super().get_context_data(**kwargs)
             markets = Market.objects.all()
-            all_boards = Wants.objects.filter(index_name_w="수공예품").order_by("-id")
+            all_boards = Wants.objects.filter(
+                index_name_w="수공예품").order_by("-id")
             page = int(self.request.GET.get("p", 1))
             paginator = Paginator(all_boards, 10)
 
@@ -426,7 +378,8 @@ class HandcraftView(TemplateView):
         else:
             context = super().get_context_data(**kwargs)
             markets = Market.objects.all()
-            all_boards = Wants.objects.filter(index_name_w="수공예품").order_by("-id")
+            all_boards = Wants.objects.filter(
+                index_name_w="수공예품").order_by("-id")
             page = int(self.request.GET.get("p", 1))
             paginator = Paginator(all_boards, 10)
 
@@ -437,68 +390,6 @@ class HandcraftView(TemplateView):
 
             return context
 
-    def post(self, request):
-        with transaction.atomic():
-            if request.POST.get("market_name") != None:
-                userinfo = Tmuser.objects.get(useremail=request.session.get("user"))
-                admin = userinfo
-                market_name = request.POST.get("market_name", "")
-                index_name = request.POST.get("index_name", "")
-                image = self.request.FILES.get("image")
-                content = request.POST.get("content", "")
-
-                if not (market_name and index_name and image and content):
-                    messages.error(request, "제출에 실패했습니다. 모든 항목을 채워야합니다.")
-
-                    return redirect("/board/handcraft/")
-
-                try :
-                    Market.objects.get(market_name=market_name)
-                    messages.error(request, "제출에 실패했습니다. 동일한 장/모임 이름이 존재합니다.")
-
-                    return redirect("/board/market/")
-
-                except:
-                    market = Market.objects.create(
-                        admin=admin,
-                        market_name=market_name,
-                        index_name=index_name,
-                        image=image,
-                        content=content,
-                        authorization="N",
-                    )
-
-                    subject = f"새 장돌뱅이가 들어왔습니다. {userinfo.username}, {market_name}"
-                    message = f"{content} \n https://www.ourtalentmarket.com/admin"
-                    mail = EmailMessage(subject, message, to=["rlarhksrud14@gmail.com"])
-                    mail.send()
-
-                    messages.success(request, f"{market_name}, 성공적으로 제출 되었습니다.")
-
-                    return redirect("/board/handcraft/")
-
-            else:
-                userinfo = Tmuser.objects.get(useremail=request.session.get("user"))
-                admin = userinfo
-                summary = request.POST.get("summary", None)
-                index_name_w = request.POST.get("index_name_w", None)
-                content_w = request.POST.get("content_w", None)
-
-                wants = Wants.objects.create(
-                    admin=admin,
-                    summary=request.POST.get("summary", None),
-                    index_name_w=request.POST.get("index_name_w", None),
-                    content_w=request.POST.get("content_w", None),
-                )
-
-                subject = f"새로운 바램이 들어왔습니다. {summary}, {index_name_w}"
-                message = f"{content_w} \n https://www.ourtalentmarket.com/admin"
-                mail = EmailMessage(subject, message, to=["rlarhksrud14@gmail.com"])
-                mail.send()
-
-                messages.success(request, f"{summary}, 성공적으로 제출 되었습니다.")
-
-                return redirect("/board/handcraft/")
 
 class HandcraftDetailView(DetailView):
     template_name = "handcraft_detail.html"
@@ -528,7 +419,8 @@ class GroupView(TemplateView):
         if self.request.session.get("user") != None:
             context = super().get_context_data(**kwargs)
             markets = Market.objects.all()
-            all_boards = Wants.objects.filter(index_name_w="소모임").order_by("-id")
+            all_boards = Wants.objects.filter(
+                index_name_w="소모임").order_by("-id")
             page = int(self.request.GET.get("p", 1))
             paginator = Paginator(all_boards, 10)
 
@@ -545,7 +437,8 @@ class GroupView(TemplateView):
         else:
             context = super().get_context_data(**kwargs)
             markets = Market.objects.all()
-            all_boards = Wants.objects.filter(index_name_w="소모임").order_by("-id")
+            all_boards = Wants.objects.filter(
+                index_name_w="소모임").order_by("-id")
             page = int(self.request.GET.get("p", 1))
             paginator = Paginator(all_boards, 10)
 
@@ -555,69 +448,6 @@ class GroupView(TemplateView):
             context["board_main"] = MainModel.objects.last()
 
             return context
-
-    def post(self, request):
-        with transaction.atomic():
-            if request.POST.get("market_name") != None:
-                userinfo = Tmuser.objects.get(useremail=request.session.get("user"))
-                admin = userinfo
-                market_name = request.POST.get("market_name", "")
-                index_name = request.POST.get("index_name", "")
-                image = self.request.FILES.get("image")
-                content = request.POST.get("content", "")
-
-                if not (market_name and index_name and image and content):
-                    messages.error(request, "제출에 실패했습니다. 모든 항목을 채워야합니다.")
-
-                    return redirect("/board/group/")
-
-                try :
-                    Market.objects.get(market_name=market_name)
-                    messages.error(request, "제출에 실패했습니다. 동일한 장/모임 이름이 존재합니다.")
-
-                    return redirect("/board/market/")
-
-                except:
-                    market = Market.objects.create(
-                        admin=admin,
-                        market_name=market_name,
-                        index_name=index_name,
-                        image=image,
-                        content=content,
-                        authorization="N",
-                    )
-
-                subject = f"새 장돌뱅이가 들어왔습니다. {userinfo.username}, {market_name}"
-                message = f"{content} \n https://www.ourtalentmarket.com/admin"
-                mail = EmailMessage(subject, message, to=["rlarhksrud14@gmail.com"])
-                mail.send()
-
-                messages.success(request, f"{market_name}, 성공적으로 제출 되었습니다.")
-
-                return redirect("/board/group/")
-
-            else:
-                userinfo = Tmuser.objects.get(useremail=request.session.get("user"))
-                admin = userinfo
-                summary = request.POST.get("summary", None)
-                index_name_w = request.POST.get("index_name_w", None)
-                content_w = request.POST.get("content_w", None)
-
-                wants = Wants.objects.create(
-                    admin=userinfo,
-                    summary=request.POST.get("summary", None),
-                    index_name_w=request.POST.get("index_name_w", None),
-                    content_w=request.POST.get("content_w", None),
-                )
-
-                subject = f"새로운 바램이 들어왔습니다. {summary}, {index_name_w}"
-                message = f"{content_w} \n https://www.ourtalentmarket.com/admin"
-                mail = EmailMessage(subject, message, to=["rlarhksrud14@gmail.com"])
-                mail.send()
-
-                messages.success(request, f"{summary}, 성공적으로 제출 되었습니다.")
-
-                return redirect("/board/group/")
 
 
 class GroupDetailView(DetailView):

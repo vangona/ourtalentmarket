@@ -15,19 +15,20 @@
 <article class="post featured">
   <header class="major">
     <h2>정보 수정 하기</h2>
-        {% if messages %}
-        <div class="container">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                [{{ message.tags }}]
-                [{{ message.message }}]
-                </div>
-        {% endfor %}
-        </div><br>
+    {% if messages %}
+    <div class="container">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        [{{ message.tags }}]
+        [{{ message.message }}]
+      </div>
+      {% endfor %}
+    </div><br>
     {% endif %}
     <hr>
     <p class="text-muted">
-        장/모임 이름 수정 원치 않으시면 공란으로 놔주세요.
+      장/모임 이름 수정 원치 않으시면 공란으로 놔주세요.
+      캠퍼스 수정은 질문하기에 올려주세요.
     </p>
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
@@ -35,25 +36,34 @@
       {% if field.name == "content" %}
       <div class="form-group">
         <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
-        <textarea class="form-control" id="{{ field.id_for_label }}"
-          placeholder="{{ field.label }}" name="{{ field.name }}" style="height: 10rem;">{{ market.content }}</textarea>
+        <textarea class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}"
+          name="{{ field.name }}" style="height: 10rem;">{{ market.content }}</textarea>
       </div>
       {% elif field.name == "image" %}
-      <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}(JPG,JPEG,PNG,GIF 512kb미만, 1장)</label>
-      <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
-      placeholder="{{ field.label }}" name="{{ field.name }}" style="margin-bottom: 8px; padding: 3px;"
-      accept="image/gif, image/jpg, image/jpeg, image/png" onchange="checkFile(this)">
-      <a href=" https://heictojpg.com/" target="_blank" class="none" style="font-size: 12px;">
-      <div style="border: 1px solid; text-align: center; width: 100%; margin-bottom: 8px;">HEIC파일(애플이미지) 변환하기</div>
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}(JPG,JPEG,PNG,GIF, 1장)</label>
+        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+          placeholder="{{ field.label }}" name="{{ field.name }}" style="margin-bottom: 8px; padding: 3px;"
+          accept="image/gif, image/jpg, image/jpeg, image/png">
+        <a href=" https://heictojpg.com/" target="_blank" class="none" style="font-size: 12px;">
+          <div style="border: 1px solid; text-align: center; width: 100%; margin-bottom: 8px;">HEIC파일(애플이미지) 변환하기</div>
         </a>
-        <a href="https://blogsearch.kr/resize/" target="_blank" class="none" style="font-size: 12px;">
-          <div style="border: 1px solid; text-align: center; width: 100%;">사진 크기 줄이기</div>
-        </a><br>
+      </div><br>
       {% elif field.name == "market_for_update" %}
-      <label for="market_for_update" style="float: left;">수정할 장/모임</label>
-      <select name="market_for_update" id="market_for_update">
-        <option value="{{ market.market_name }}">{{ market.market_name }}</option>
-      </select><br>
+      <div class="form-group">
+        <label for="market_for_update" style="float: left;">수정할 장/모임</label>
+        <select name="market_for_update" id="market_for_update" class="form-control">
+          <option value="{{ market.market_name }}">{{ market.market_name }}</option>
+        </select>
+      </div><br>
+      {% elif field.name == "select_name" %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
+        <select name="select_name" id="select_name" class="form-control">
+          <option value="닉네임" selected>닉네임</option>
+          <option value="실명">실명</option>
+        </select>
+      </div><br>
       {% else %}
       <div class="form-group">
         <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
@@ -75,14 +85,4 @@
 {% endblock %}
 
 {% block script %}
-<script type="text/javascript">
-  function checkFile(k) {
-    var file = k.files;
-    if (file[0].size > 1024 * 1024 * 0.5) {
-      alert('512kb 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB')
-      k.outerHTML = k.outerHTML;
-    }
-    else return;
-  };
-</script>
 {% endblock %}

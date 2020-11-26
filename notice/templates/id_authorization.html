@@ -1,0 +1,62 @@
+{% extends "write_base.html" %}
+
+<!-- 화면 첫 부분 -->
+
+{% block intro %}
+<h1>공지사항</h1>
+{% endblock %}
+
+<!-- 메인 -->
+
+{% block main %}
+<header class="major">
+  <article class="post featured">
+    <h2>학생증 승인하기</h2>
+    <form action="." method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        {% if users == "None" %}
+        <p>
+          승인할 학생증이 없습니다.
+        </p>
+        {% endif %}
+        <label for="user_id" style="float: left;">사용자 선택</label>
+        <select name="user_id" id="user_id" class="form-control">
+          {% for user in users %}
+          <option value="{{ user.id }}">
+            {{ user }}
+          </option>
+          {% endfor %}
+        </select>
+        <br />
+        {% for user in users %}
+        <div class="image-wrapper">
+          <div class="image">
+            <div style="text-align: left; font-size: 1rem;">
+              {{ user.waiting_user.username }}
+            </div>
+            <img src="{{ user.waiting_user.id_image.url }}" />
+          </div>
+        </div><br>
+        {% endfor %}
+        <label for="authorization" style="float: left;">승인 여부</label>
+        <select name="authorization" id="authorization" class="form-control">
+          <option value="Y">Y</option>
+          <op xtion value="N">N</option>
+        </select>
+      </div>
+      {% if field.errors %}
+      <span style="color: red">{{ field.errors }}</span>
+      {% endif %}
+      <input type="submit" value="제출">
+    </form>
+  </article>
+  <div class="button" style="float: right;"><a href="/notice/admin/" class="none">돌아가기</a></div>
+  {% endblock %}
+
+  <!-- article -->
+  {% block article %}
+  {% endblock %}
+
+  {% block script %}
+  {% endblock %}

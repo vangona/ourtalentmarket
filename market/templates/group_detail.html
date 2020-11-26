@@ -18,14 +18,27 @@
   <header class="major">
     <h2><a>{{ market.market_name }}</a></h2><br>
     <div style="text-align: right;">
-        <a style="display: inline-block; font-size: 90%;" class="none" >운영자 : {{ market.admin }}</a><br>
-        <a style="display: inline-block; font-size: 90%;" class="none" >등록일 : {{ market.registered_dttm|date:'Y-m-d' }}</a>
+      {% if market.select_name == "닉네임" %}
+      <a style="display: inline-block; font-size: 90%;" class="none">운영자({{ market.select_name }}) :
+        {{ market.admin }}</a><br>
+      {% elif market.select_name == "실명" %}
+      <a style="display: inline-block; font-size: 90%;" class="none">운영자({{ market.select_name }}) :
+        {{ market.admin.department_name }}_{{ market.admin.username }}</a><br>
+      {% endif %}
+      <a style="display: inline-block; font-size: 90%;" class="none">{{ market.campus }},
+        {{ market.registered_dttm|date:'Y-m-d' }}</a>
     </div>
     <hr style="margin-top: 1rem;">
+    {% if market.admin.id_verification == "Y" %}
+    <div style="font-size: 90%; font-style: italic;">이 장/모임은 학생증이 인증된 사용자의 장/모임입니다.</div><br>
+    {% elif market.admin.id_verification == "N" %}
+    <div style="font-size: 90%; font-style: italic;">이 장/모임은 학생증이 인증되지 않은 사용자의 장/모임입니다.</div><br>
+    {% endif %}
     <div style="text-align: left; border: 1px solid;">
       <div style="display: block; padding: 2rem 2rem 1rem 2rem; border: 0.1px; margin-right: -4px;">
         <div style="text-align: center;">
-          <a class="image main" style="margin-bottom: 0px; vertical-align: middle;"><img src="{{ market.image.url }}" /></a>
+          <a class="image main" style="margin-bottom: 0px; vertical-align: middle;"><img
+              src="{{ market.image.url }}" /></a>
         </div>
         <hr>
         <div style="text-align: left;">
@@ -42,8 +55,8 @@
         {% endifequal %}
         {% ifnotequal market.admin userinfo %}
         <div style="text-align: center; margin-bottom: 15px;">
-        <a href="#note" rel="modal:open" class="none"><button>'{{ market.market_name }}'에게 쪽지
-        남기기</button></a><br>
+          <a href="#note" rel="modal:open" class="none"><button>'{{ market.market_name }}'에게 쪽지
+              남기기</button></a><br>
         </div>
         {% endifnotequal %}
       </div>
@@ -62,8 +75,8 @@
         <label for="content" style="text-align: left;">내용</label>
         <input id="content" type="text" name="content"><br>
         <div class="text-muted">
-            가입되지 않은 사용자는 답장을 받을 수 없습니다.<br>
-            답장이 필요하시면 로그인 해주세요.
+          가입되지 않은 사용자는 답장을 받을 수 없습니다.<br>
+          답장이 필요하시면 로그인 해주세요.
         </div><br>
         <button id="sending" style="float: left;">보내기</button>
       </header>

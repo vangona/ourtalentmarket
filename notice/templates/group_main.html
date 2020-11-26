@@ -15,7 +15,7 @@
     <form action="." method="POST">
       {% csrf_token %}
       <div class="form-group">
-        {% if markets == None %}
+        {% if markets == "None" %}
         <p>
           메인으로 할 소모임이 없습니다.
         </p>

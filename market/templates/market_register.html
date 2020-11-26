@@ -52,18 +52,21 @@
           <option value="수공예품">공예품장</option>
           <option value="소모임">소모임</option>
         </select>
+        {% elif field.name == 'campus' %}
+        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
+        <select name="campus" id="campus">
+          <option value="논산 캠퍼스">논산 캠퍼스</option>
+          <option value="대전 캠퍼스">대전 캠퍼스</option>
+          <option value="캠퍼스 구분 없음">캠퍼스 구분 없음</option>
+        </select>
         {% elif field.name == "image" %}
-        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}(JPG,JPEG,PNG,GIF 512kb미만,
-          1장)</label>
+        <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}(JPG,JPEG,PNG,GIF, 1장)</label>
         <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
           placeholder="{{ field.label }}" name="{{ field.name }}" style="margin-bottom: 8px; padding: 3px;"
           accept="image/gif, image/jpg, image/jpeg, image/png" onchange="checkFile(this)">
         <a href=" https://heictojpg.com/" target="_blank" class="none" style="font-size: 12px;">
           <div style="border: 1px solid; text-align: center; width: 100%; margin-bottom: 8px;">HEIC파일(애플
             이미지) 변환하기 </div>
-        </a>
-        <a href="https://blogsearch.kr/resize/" target="_blank" class="none" style="font-size: 12px;">
-          <div style="border: 1px solid; text-align: center; width: 100%;">사진 크기 줄이기</div>
         </a>
         {% else %}
         <label for="{{ field.id_for_label }}" style="float: left;">{{ field.label }}</label>
@@ -195,7 +198,7 @@
   {% endblock %}
 
   {% block script %}
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function checkFile(k) {
       var file = k.files;
       if (file[0].size > 1024 * 1024 * 0.5) {
@@ -204,5 +207,5 @@
       }
       else return;
     };
-  </script>
+  </script> -->
   {% endblock %}

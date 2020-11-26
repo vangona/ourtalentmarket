@@ -1,12 +1,14 @@
 import os
 import uuid
 from django.db import models
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill, Thumbnail, ResizeToFit
 from tmuser.models import Tmuser
 from ddat.models import Market
 
 # Create your models here.
+
+
 class Questions(models.Model):
     username = models.CharField(max_length=32, verbose_name="이름")
 
@@ -14,7 +16,8 @@ class Questions(models.Model):
 
     useremail = models.EmailField(max_length=128, verbose_name="이메일")
 
-    phonenumber = models.CharField(max_length=16, verbose_name="연락처", default="기본값")
+    phonenumber = models.CharField(
+        max_length=16, verbose_name="연락처", default="기본값")
 
     department_name = models.CharField(max_length=64, verbose_name="학과")
 
@@ -24,9 +27,11 @@ class Questions(models.Model):
 
     content = models.TextField(verbose_name="질문 내용")
 
-    answered = models.CharField(max_length=4, verbose_name="답변 여부", default="N")
+    answered = models.CharField(
+        max_length=4, verbose_name="답변 여부", default="N")
 
-    registered_dttm = models.DateTimeField(auto_now_add=True, verbose_name="등록시간")
+    registered_dttm = models.DateTimeField(
+        auto_now_add=True, verbose_name="등록시간")
 
     modified_dttm = models.DateTimeField(auto_now=True, verbose_name="수정시간")
 
@@ -48,7 +53,8 @@ class Answer(models.Model):
 
     content = models.TextField(verbose_name="답변 내용")
 
-    registered_dttm = models.DateTimeField(auto_now_add=True, verbose_name="등록시간")
+    registered_dttm = models.DateTimeField(
+        auto_now_add=True, verbose_name="등록시간")
 
     def __str__(self):
         return self.title
@@ -58,6 +64,7 @@ class Answer(models.Model):
         verbose_name = "문의 답변"
         verbose_name_plural = "문의 답변"
 
+
 class Content(models.Model):
     title = models.CharField(max_length=64, verbose_name="제목")
 
@@ -65,7 +72,8 @@ class Content(models.Model):
 
     writer = models.CharField(max_length=8, verbose_name="작성자")
 
-    registered_dttm = models.DateTimeField(auto_now_add=True, verbose_name="등록시간")
+    registered_dttm = models.DateTimeField(
+        auto_now_add=True, verbose_name="등록시간")
 
     modified_dttm = models.DateTimeField(auto_now=True, verbose_name="수정시간")
 
@@ -87,10 +95,19 @@ class Image(models.Model):
     UPLOAD_PATH = "user-upload"
 
     content = models.ForeignKey(Content, on_delete=models.CASCADE, null=True)
-    image = models.ImageField(upload_to=image_upload_to, blank=True, null=True)
+    image = ProcessedImageField(
+        upload_to=image_upload_to,
+        processors=[ResizeToFit(width=2048, upscale=False)],
+        format='JPEG',
+        options={'quality': 70},
+        blank=True)
+
     image_thumbnail = ImageSpecField(
-        source="image", processors=[ResizeToFill(200, 150)]
+        source="image",
+        processors=[ResizeToFill(200, 150)],
+        format='JPEG',
     )
+
     market = models.ForeignKey(
         Market, on_delete=models.CASCADE, related_name="board", null=True
     )
@@ -99,11 +116,13 @@ class Image(models.Model):
     class Meta:
         ordering = ["order"]
 
+
 class Comment(models.Model):
     board = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
     writer = models.ForeignKey(Tmuser, on_delete=models.CASCADE)
     content = models.TextField(verbose_name="댓글 내용")
-    registered_dttm = models.DateTimeField(auto_now_add=True, verbose_name="등록시간")
+    registered_dttm = models.DateTimeField(
+        auto_now_add=True, verbose_name="등록시간")
     modified_dttm = models.DateTimeField(auto_now=True, verbose_name="수정시간")
 
     def __str(self):

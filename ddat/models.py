@@ -1,11 +1,13 @@
 import os
 import uuid
 from django.db import models
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill, Thumbnail, ResizeToFit
 from tmuser.models import Tmuser
 
 # Create your models here.
+
+
 def image_upload_to(instance, filename):
     ext = filename.split(".")[-1]
     return os.path.join(instance.UPLOAD_PATH, "%s.%s" % (uuid.uuid4(), ext))
@@ -16,23 +18,44 @@ class Market(models.Model):
 
     admin = models.ForeignKey(Tmuser, on_delete=models.CASCADE, null=True)
 
-    market_name = models.CharField(max_length=32, verbose_name="장/모임 이름", default="기본값")
+    market_name = models.CharField(
+        max_length=32, verbose_name="장/모임 이름", default="기본값")
 
-    index_name = models.CharField(max_length=64, verbose_name="분류", default="기본값")
+    index_name = models.CharField(
+        max_length=64, verbose_name="분류", default="기본값")
 
     content = models.TextField(verbose_name="설명")
 
-    image = models.ImageField(upload_to=image_upload_to, blank=True)
+    image = ProcessedImageField(
+        upload_to=image_upload_to,
+        processors=[ResizeToFit(width=2048, upscale=False)],
+        format='JPEG',
+        options={'quality': 70},
+        blank=True)
 
     image_thumbnail = ImageSpecField(
-        source="image", processors=[ResizeToFill(200, 150)]
+        source="image",
+        processors=[ResizeToFill(200, 150)],
+        format='JPEG',
     )
 
     user = models.ManyToManyField(Tmuser, related_name="user", blank=True)
 
-    authorization = models.CharField(max_length=4, verbose_name="승인 여부", default="N")
+    authorization = models.CharField(
+        max_length=4, verbose_name="승인 여부", default="N")
 
-    registered_dttm = models.DateTimeField(auto_now_add=True, verbose_name="등록시간")
+# 추가된 부분
+
+    campus = models.CharField(
+        max_length=32, verbose_name="캠퍼스 구분", default="논산 캠퍼스")
+
+    select_name = models.CharField(
+        max_length=16, verbose_name="닉네임/실명", default="닉네임")
+
+# ----
+
+    registered_dttm = models.DateTimeField(
+        auto_now_add=True, verbose_name="등록시간")
 
     modified_dttm = models.DateTimeField(auto_now=True, verbose_name="수정시간")
 
@@ -48,13 +71,16 @@ class Market(models.Model):
 class Wants(models.Model):
     admin = models.ForeignKey(Tmuser, on_delete=models.CASCADE, null=True)
 
-    summary = models.CharField(max_length=32, verbose_name="한 줄 요약", default="기본값")
+    summary = models.CharField(
+        max_length=32, verbose_name="한 줄 요약", default="기본값")
 
-    index_name_w = models.CharField(max_length=64, verbose_name="분류", default="기본값")
+    index_name_w = models.CharField(
+        max_length=64, verbose_name="분류", default="기본값")
 
     content_w = models.TextField(verbose_name="설명")
 
-    registered_dttm = models.DateTimeField(auto_now_add=True, verbose_name="등록시간")
+    registered_dttm = models.DateTimeField(
+        auto_now_add=True, verbose_name="등록시간")
 
     modified_dttm = models.DateTimeField(auto_now=True, verbose_name="수정시간")
 

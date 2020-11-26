@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, DetailView, DeleteView
 from django.views.generic.edit import FormView
+from django.core.mail import EmailMessage
 from django.core.paginator import Paginator
+from django.contrib import messages
+from django.db import transaction
 from django.utils.decorators import method_decorator
 from ddat.decorator import login_required, admin_required
 from .models import Note
 from ddat.models import Market
 from market.models import TalentMarket, Group, Handcraft
-from tmuser.models import Tmuser
-from .forms import MypageUpdateForm
+from tmuser.models import Tmuser, WaitingId
+from .forms import MypageUpdateForm, IdVerificationForm
 
 # Create your views here.
+
 
 @method_decorator(login_required, name="dispatch")
 class NoteView(TemplateView):
@@ -25,7 +29,8 @@ class MypageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
+        userinfo = Tmuser.objects.get(
+            useremail=self.request.session.get("user"))
         if Market.objects.filter(admin=userinfo) != None:
             markets = Market.objects.filter(admin=userinfo)
             for market in markets:
@@ -65,7 +70,8 @@ class ReadNoteView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
+        userinfo = Tmuser.objects.get(
+            useremail=self.request.session.get("user"))
         markets = Market.objects.filter(admin=userinfo)
 
         notes = Note.objects.filter(receiver=userinfo).order_by("-id")
@@ -110,7 +116,8 @@ class MypageUpdateView(FormView):
     success_url = "/mypage/"
 
     def form_valid(self, form):
-        userinfo = Tmuser.objects.get(useremail=self.request.session.get("user"))
+        userinfo = Tmuser.objects.get(
+            useremail=self.request.session.get("user"))
         usernickname = form.data.get("usernickname")
         phonenumber = form.data.get("phonenumber")
 
@@ -123,6 +130,50 @@ class MypageUpdateView(FormView):
         userinfo.save()
 
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["userinfo"] = Tmuser.objects.get(
+            useremail=self.request.session.get("user")
+        )
+
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class IdVerificationView(FormView):
+    template_name = "id_verification.html"
+    form_class = IdVerificationForm
+    success_url = "/mypage/"
+
+    def form_valid(self, form):
+        with transaction.atomic():
+            userinfo = Tmuser.objects.get(
+                useremail=self.request.session.get("user"))
+            id_image = self.request.FILES.get("id_image")
+
+            if id_image != None:
+                userinfo.id_image = id_image
+
+            userinfo.save()
+
+            waitingid = WaitingId(
+                waiting_user=userinfo
+            )
+
+            waitingid.save()
+
+            subject = f"학생증 인증 요청 {userinfo.username}"
+            message = f"https://www.ourtalentmarket.com/admin"
+            mail = EmailMessage(subject, message, to=[
+                                "rlarhksrud14@gmail.com"])
+            mail.send()
+
+            messages.success(
+                self.request, f"성공적으로 제출 되었습니다. 검토 후 인증됩니다."
+            )
+
+            return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -15,7 +15,7 @@
     <form action="." method="POST">
       {% csrf_token %}
       <div class="form-group">
-        {% if markets == None %}
+        {% if markets == "None" %}
         <p>
           승인할 장/모임이 없습니다.
         </p>
@@ -23,7 +23,9 @@
         <label for="market_name" style="float: left;">재능장 선택</label>
         <select name="market_name" id="id_market_name">
           {% for market in markets %}
+          {% if market.admin.id_verification == "Y" %}
           <option value="{{ market.market_name }}">{{ market.market_name }}</option>
+          {% endif %}
           {% endfor %}
         </select>
         <br />

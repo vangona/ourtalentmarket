@@ -15,16 +15,29 @@
 <article class="post featured">
   <header class="major">
     {% if messages %}
-        <div class="container">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                [{{ message.tags }}]
-                [{{ message.message }}]
-                </div>
-        {% endfor %}
-        </div><br>
+    <div class="container">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        [{{ message.tags }}]
+        [{{ message.message }}]
+      </div>
+      {% endfor %}
+    </div><br>
     {% endif %}
     <h2>{{ userinfo.usernickname }}님의 마이 페이지</h2>
+    <hr>
+    {% if userinfo.id_verification == "N" %}
+    <h3>학생증 인증하기</h3>
+    <a href="/mypage/verification/" class="none">
+      <div class="button">학생증 인증하기</div>
+    </a>
+    {% elif userinfo.id_verification == "Y" %}
+    <h3>학생증이 인증되어있습니다.</h3>
+    <div>
+      학과 : {{ userinfo.department_name }}<br>
+      학번 : {{ userinfo.student_number }}
+    </div>
+    {% endif %}
     <hr>
     <h3>내 정보 수정하기</h3>
     <a href="/mypage/update/" class="none">

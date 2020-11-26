@@ -38,6 +38,7 @@ from notice.views import (
     TalentMarketMainView,
     GroupMainView,
     HandcraftMainView,
+    IdAuthorizationView,
 )
 from market.views import (
     MarketView,
@@ -69,6 +70,7 @@ from mypage.views import (
     ReadNoteDetailView,
     NoteDeleteView,
     MypageUpdateView,
+    IdVerificationView,
 )
 
 urlpatterns = [
@@ -83,19 +85,23 @@ urlpatterns = [
     path("board/market/update/<int:pk>", MarketUpdateView.as_view()),
     path("board/market/board/update/<int:pk>", MarketBoardUpdateView.as_view()),
     path("board/market/<int:pk>", MarketDetailView.as_view()),
-    path("board/market/detail/<int:market>/<int:pk>", MarketBoardDetailView.as_view()),
+    path("board/market/detail/<int:market>/<int:pk>",
+         MarketBoardDetailView.as_view()),
     path("board/market/register/", MarketRegisterView.as_view()),
     path("board/want/register/", WantRegisterView.as_view()),
     path("board/handcraft/", HandcraftView.as_view()),
     path("board/handcraft/<int:pk>", HandcraftDetailView.as_view()),
-    path("board/handcraft/detail/<int:market>/<int:pk>", MarketBoardDetailView.as_view()),
+    path("board/handcraft/detail/<int:market>/<int:pk>",
+         MarketBoardDetailView.as_view()),
     path("board/group/", GroupView.as_view()),
     path("board/group/<int:pk>", GroupDetailView.as_view()),
-    path("board/group/detail/<int:market>/<int:pk>", MarketBoardDetailView.as_view()),
+    path("board/group/detail/<int:market>/<int:pk>",
+         MarketBoardDetailView.as_view()),
     path("login/", LoginView.as_view()),
     path("register/", RegisterView.as_view()),
     path("logout/", logout),
     path("mypage/", MypageView.as_view()),
+    path("mypage/verification/", IdVerificationView.as_view()),
     path("mypage/update/", MypageUpdateView.as_view()),
     path("mypage/note/", NoteView.as_view()),
     path("mypage/note/read/", ReadNoteView.as_view()),
@@ -105,6 +111,7 @@ urlpatterns = [
     path("notice/<int:pk>/", NoticeDetailView.as_view()),
     path("notice/admin/", AdminView.as_view()),
     path("notice/admin/authorize/", AuthorizeView.as_view()),
+    path("notice/admin/id_check/", IdAuthorizationView.as_view()),
     path("notice/admin/register/", NoticeregisterView.as_view()),
     path("notice/admin/noticemain/", NoticeMainView.as_view()),
     path("notice/admin/talentmarketmain/", TalentMarketMainView.as_view()),
@@ -143,7 +150,7 @@ urlpatterns += [
         ReplyCreateView.as_view(),
         name="apis_views_reply_create",
     ),
-        path(
+    path(
         "views/comment/create/",
         CommentCreateView.as_view(),
         name="apis_views_comment_create",
